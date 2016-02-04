@@ -1,0 +1,34 @@
+{
+  "name": "shelf-pack",
+  "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "ISC",
+  "author": "Bryan Housel <bryan@mapbox.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mapbox/shelf-pack.git"
+  },
+  "bugs": "https://github.com/mapbox/shelf-pack/issues",
+  "keywords": [
+    "bin packing", "sprite"
+  ],
+  "devDependencies": {
+    "documentation": "^2.1.0-alpha2",
+    "documentation-readme": "^2.0.0",
+    "eslint": "^1.6.0",
+    "eslint-config-mourner": "^1.0.1",
+    "retire": "*",
+    "tap": "^2.1.1"
+  },
+  "eslintConfig": {
+    "extends": "mourner"
+  },
+  "scripts": {
+    "retire": "retire -p",
+    "lint": "eslint *.js test",
+    "docs-page": "documentation --lint --github --format html --output .",
+    "docs-readme": "documentation-readme -s API",
+    "test": "npm run retire && npm run lint && tap --cov test/*.js"
+  }
+}
