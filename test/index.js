@@ -32,7 +32,7 @@ test('ShelfPack', function(t) {
     t.test('not enough room', function(t) {
         var bp = new ShelfPack(10, 10);
         t.deepEqual(bp.allocate(10, 10), {x: 0, y: 0, w: 10, h: 10 }, 'first 10x10 bin');
-        t.deepEqual(bp.allocate(10, 10), {x: -1, y: -1 }, 'not enough room');
+        t.notOk(bp.allocate(10, 10), 'not enough room');
         t.end();
     });
 

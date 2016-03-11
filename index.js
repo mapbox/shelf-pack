@@ -61,7 +61,7 @@ ShelfPack.prototype.allocate = function(reqWidth, reqHeight) {
     }
 
     // no more space
-    return {x: -1, y: -1};
+    return null;
 };
 
 
@@ -86,7 +86,7 @@ function Shelf(y, width, height) {
 Shelf.prototype = {
     alloc: function(reqWidth, reqHeight) {
         if (reqWidth > this.free || reqHeight > this.height) {
-            return {x: -1, y: -1};
+            return null;
         }
         var x = this.x;
         this.x += reqWidth;
