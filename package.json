@@ -25,6 +25,6 @@
     "lint": "eslint *.js test",
     "docs-page": "documentation --lint --github --format html --output .",
     "docs-readme": "documentation-readme -s API",
-    "test": "npm run retire && npm run lint && tap --cov test/*.js"
+    "test": "npm run lint && tap --cov test/*.js"
   }
 }
