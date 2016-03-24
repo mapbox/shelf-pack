@@ -33,7 +33,7 @@ var suite = new Benchmark.Suite();
 
 suite
     .add('ShelfPack allocate fixed bins', function(t) {
-        var pack = new ShelfPack(dim, dim);
+        var pack = new ShelfPack({ w: dim, h: dim });
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.allocate(fixedBoth[j].width, fixedBoth[j].height);
@@ -41,7 +41,7 @@ suite
         }
     })
     .add('ShelfPack allocate random width bins', function(t) {
-        var pack = new ShelfPack(dim, dim);
+        var pack = new ShelfPack({ w: dim, h: dim });
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.allocate(randWidth[j].width, randWidth[j].height);
@@ -49,7 +49,7 @@ suite
         }
     })
     .add('ShelfPack allocate random height bins', function(t) {
-        var pack = new ShelfPack(dim, dim);
+        var pack = new ShelfPack({ w: dim, h: dim });
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.allocate(randHeight[j].width, randHeight[j].height);
@@ -57,7 +57,7 @@ suite
         }
     })
     .add('ShelfPack allocate random height and width bins', function(t) {
-        var pack = new ShelfPack(dim, dim);
+        var pack = new ShelfPack({ w: dim, h: dim });
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.allocate(randBoth[j].width, randBoth[j].height);

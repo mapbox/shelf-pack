@@ -5,11 +5,20 @@ module.exports = ShelfPack;
 /**
  * Uses the Shelf Best Height Fit algorithm from
  * http://clb.demon.fi/files/RectangleBinPack.pdf
- * @private
+ *
+ * @class ShelfPack
+ * @param {Object} options
+ * @param {number} [options.width=64] Initial width of the sprite
+ * @param {number} [options.height=64] Initial width of the sprite
+ * @param {boolean} [options.autoGrow=false] If `true`, the sprite will automatically grow
+ * @example
+ * var sprite = new ShelfPack({width: 64, height: 64});
  */
-function ShelfPack(width, height) {
-    this.width = width;
-    this.height = height;
+function ShelfPack(options) {
+    options = options || {};
+    this.width = options.width || options.w || 64;
+    this.height = options.height || options.h || 64;
+    this.autoResize = !!options.autoResize;
     this.shelves = [];
     this.stats = {};
     this.count = function(h) {
@@ -17,6 +26,48 @@ function ShelfPack(width, height) {
     };
 }
 
+/**
+ * Batch bin allocator
+ *
+ * @param {Array} bins Array of requested bins - each object should have `width` and `height` properties
+ * @param {Object} options
+ * @param {boolean} [options.inPlace=false] If `true`, the supplied bin objects will be updated inplace with `x` and `y` properties
+ * @returns {Array} Array of allocated bins - each bin is an object with `x`, `y`, `w`, `h` properties
+ */
+ShelfPack.prototype.pack = function(bins, options) {
+    bins = [].concat(bins);
+    options = options || {};
+
+    var results = [],
+        w, h, allocation;
+
+    for (var i = 0; i < bins.length; i++) {
+        w = bins[i].width || bins[i].w;
+        h = bins[i].height || bins[i].h;
+        if (w && h) {
+            allocation = this.allocate(w, h);
+            if (!allocation) {
+                continue;
+            }
+            if (options.inPlace) {
+                bins[i].x = allocation.x;
+                bins[i].y = allocation.y;
+            }
+            results.push(allocation);
+        }
+    }
+
+    return results;
+};
+
+
+/**
+ * Single bin allocator
+ *
+ * @param {number} reqWidth Requested bin width
+ * @param {number} reqHeight Requested bin height
+ * @returns {Object} Allocated bin object with `x`, `y`, `w`, `h` properties, or `null` if allocation failed
+ */
 ShelfPack.prototype.allocate = function(reqWidth, reqHeight) {
     var y = 0,
         best = { shelf: -1, waste: Infinity },
@@ -65,8 +116,18 @@ ShelfPack.prototype.allocate = function(reqWidth, reqHeight) {
 };
 
 
+/**
+ * Resizes the sprite
+ * The resize will fail if the requested dimensions are smaller than the current sprite dimensions
+ *
+ * @param {number} reqWidth Requested sprite width
+ * @param {number} reqHeight Requested sprite height
+ * @returns {boolean} true if resize succeeded, false if failed
+ */
 ShelfPack.prototype.resize = function(reqWidth, reqHeight) {
-    if (reqWidth < this.width || reqHeight < this.height) { return false; }
+    if (reqWidth < this.width || reqHeight < this.height) {
+        return false;
+    }
     this.height = reqHeight;
     this.width = reqWidth;
     for (var i = 0; i < this.shelves.length; i++) {
@@ -91,11 +152,13 @@ Shelf.prototype = {
         var x = this.x;
         this.x += reqWidth;
         this.free -= reqWidth;
-        return {x: x, y: this.y, w: reqWidth, h: reqHeight};
+        return { x: x, y: this.y, w: reqWidth, h: reqHeight, width: reqWidth, height: reqHeight };
     },
 
     resize: function(reqWidth) {
-        if (reqWidth < this.width) { return false; }
+        if (reqWidth < this.width) {
+            return false;
+        }
         this.free += (reqWidth - this.width);
         this.width = reqWidth;
         return true;
