@@ -7,7 +7,7 @@ A 2D rectangular [bin packing](https://en.wikipedia.org/wiki/Bin_packing_problem
 data structure that uses the Shelf Best Height Fit heuristic.
 
 
-### What is it
+### What is it?
 
 `shelf-pack` is a library for packing little rectangles into a big rectangle.  This sounds simple enough,
 but finding an optimal packing is a problem with [NP-Complete](https://en.wikipedia.org/wiki/NP-completeness)
@@ -63,6 +63,10 @@ for (var i = 0; i < 5; i++) {
 sprite.resize(128, 128);
 
 ```
+
+### Documentation
+
+Complete API documentation is here:  http://mapbox.github.io/shelf-pack/docs/
 
 
 ### See also
