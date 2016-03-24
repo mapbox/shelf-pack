@@ -16,8 +16,7 @@
   "devDependencies": {
     "benchmark": "^2.1.0",
     "bin-pack": "1.0.2",
-    "documentation": "^2.1.0-alpha2",
-    "documentation-readme": "^2.0.0",
+    "documentation": "^4.0.0-beta",
     "eslint": "^1.6.0",
     "retire": "*",
     "tap": "^2.1.1"
@@ -25,8 +24,7 @@
   "scripts": {
     "retire": "retire -p",
     "lint": "eslint *.js test",
-    "docs-page": "documentation --lint --github --format html --output .",
-    "docs-readme": "documentation-readme -s API",
+    "docs": "documentation build --lint --github --format html --output docs/",
     "test": "npm run lint && tap --cov test/*.js",
     "bench": "node bench/bench.js"
   }
