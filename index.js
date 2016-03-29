@@ -30,7 +30,7 @@ function ShelfPack(w, h, options) {
 }
 
 /**
- * Batch allocate multiple bins into the sprite.
+ * Batch pack multiple bins into the sprite.
  *
  * @param   {Array}   bins Array of requested bins - each object should have `width`, `height` (or `w`, `h`) properties
  * @param   {Object}  [options]
@@ -55,7 +55,7 @@ ShelfPack.prototype.pack = function(bins, options) {
         w = bins[i].w || bins[i].width;
         h = bins[i].h || bins[i].height;
         if (w && h) {
-            allocation = this.allocate(w, h);
+            allocation = this.packOne(w, h);
             if (!allocation) {
                 continue;
             }
@@ -71,15 +71,15 @@ ShelfPack.prototype.pack = function(bins, options) {
 };
 
 /**
- * Allocate a single bin into the sprite.
+ * Pack a single bin into the sprite.
  *
  * @param   {number}  w   Width of the bin to allocate
  * @param   {number}  h   Height of the bin to allocate
  * @returns {Object}  Allocated bin object with `x`, `y`, `w`, `h` properties, or `null` if allocation failed
  * @example
- * var results = sprite.allocate(12, 16);
+ * var results = sprite.packOne(12, 16);
  */
-ShelfPack.prototype.allocate = function(w, h) {
+ShelfPack.prototype.packOne = function(w, h) {
     var y = 0,
         best = { shelf: -1, waste: Infinity },
         shelf, waste;
@@ -141,7 +141,7 @@ ShelfPack.prototype.allocate = function(w, h) {
         }
 
         this.resize(w2, h2);
-        return this.allocate(w, h);  // retry
+        return this.packOne(w, h);  // retry
     }
 
     return null;

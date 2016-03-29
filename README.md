@@ -53,7 +53,7 @@ var sprite = new ShelfPack(64, 64);
 
 // Pack bins one at a time..
 for (var i = 0; i < 5; i++) {
-    var bin = sprite.allocate(32, 32);   // request width, height
+    var bin = sprite.packOne(32, 32);   // request width, height
     // returns an bin object with `x`, `y`, `w`, `h`, `width`, `height` properties..
 
     if (bin) {

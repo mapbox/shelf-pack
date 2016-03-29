@@ -32,7 +32,7 @@ for (var i = 0; i < N; i++) {
 var suite = new Benchmark.Suite();
 
 suite
-    .add('ShelfPack batch allocate fixed bins', function(t) {
+    .add('ShelfPack batch allocate fixed size bins', function(t) {
         var pack = new ShelfPack(dim, dim).pack(fixedBoth);
     })
     .add('ShelfPack batch allocate random width bins', function(t) {
@@ -44,11 +44,11 @@ suite
     .add('ShelfPack batch allocate random height and width bins', function(t) {
         var pack = new ShelfPack(dim, dim).pack(randBoth);
     })
-    .add('ShelfPack single allocate fixed bins', function(t) {
+    .add('ShelfPack single allocate fixed size bins', function(t) {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
-            ok = pack.allocate(fixedBoth[j].width, fixedBoth[j].height);
+            ok = pack.packOne(fixedBoth[j].width, fixedBoth[j].height);
             if (!ok) throw 'out of space';
         }
     })
@@ -56,7 +56,7 @@ suite
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
-            ok = pack.allocate(randWidth[j].width, randWidth[j].height);
+            ok = pack.packOne(randWidth[j].width, randWidth[j].height);
             if (!ok) throw 'out of space';
         }
     })
@@ -64,7 +64,7 @@ suite
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
-            ok = pack.allocate(randHeight[j].width, randHeight[j].height);
+            ok = pack.packOne(randHeight[j].width, randHeight[j].height);
             if (!ok) throw 'out of space';
         }
     })
@@ -72,11 +72,11 @@ suite
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
-            ok = pack.allocate(randBoth[j].width, randBoth[j].height);
+            ok = pack.packOne(randBoth[j].width, randBoth[j].height);
             if (!ok) throw 'out of space';
         }
     })
-    .add('BinPack batch allocate fixed bins', function(t) {
+    .add('BinPack batch allocate fixed size bins', function(t) {
         var pack = BinPack(fixedBoth);
     })
     .add('BinPack batch allocate random width bins', function(t) {
