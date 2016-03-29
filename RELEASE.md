@@ -3,6 +3,7 @@
 #### Update version, docs, tag, and publish
 - [ ] git checkout master
 - [ ] npm install
+- [ ] Update CHANGELOG
 - [ ] Update version number in `package.json`
 - [ ] npm run docs
 - [ ] git add .
