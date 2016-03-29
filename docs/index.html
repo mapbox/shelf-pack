@@ -32,6 +32,11 @@
                   #allocate
                 </a>
                 <a
+                  href='#ShelfPack.clear'
+                  class='regular block'>
+                  #clear
+                </a>
+                <a
                   href='#ShelfPack.pack'
                   class='regular block'>
                   #pack
@@ -48,38 +53,48 @@
         <div class='px2'>
 <div class='py1'><section class='py2 clearfix'>
   <h2 id='ShelfPack' class='mt0'>
-    ShelfPack<span class='gray'>(options)</span>
+    ShelfPack<span class='gray'>([w], [h], [options])</span>
   </h2>
-    <p><a href='https://github.com/mapbox/shelf-pack/blob/76a161f108fb80f903d0ba34d0d2fe8cb6b55e8a/index.js#L17-L27'><code>index.js</code></a></p>
+    <p><a href='https://github.com/mapbox/shelf-pack/blob/777733214adea1e83067d34b5206afd3e644ad79/index.js#L20-L30'><code>index.js</code></a></p>
   
   
   
   
   
-  <p>Uses the Shelf Best Height Fit algorithm from
+  <p>Create a new ShelfPack bin allocator.</p>
+<p>Uses the Shelf Best Height Fit algorithm from
 <a href="http://clb.demon.fi/files/RectangleBinPack.pdf">http://clb.demon.fi/files/RectangleBinPack.pdf</a></p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+=
+ <strong>w</strong>
+            (default <code>64</code>)
+          :
+          <div class='force-inline'>
+            <p>Initial width of the sprite</p>
+
+          </div>
+        </li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+=
+ <strong>h</strong>
+            (default <code>64</code>)
+          :
+          <div class='force-inline'>
+            <p>Initial width of the sprite</p>
+
+          </div>
+        </li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+=
  <strong>options</strong>
           :
           <div class='force-inline'>
             
           </div>
             <ul>
-                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-=
- options.width
-                    (default <code>64</code>)
-                  <p>Initial width of the sprite</p>
-</li>
-                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-=
- options.height
-                    (default <code>64</code>)
-                  <p>Initial width of the sprite</p>
-</li>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>
 =
  options.autoGrow
@@ -91,46 +106,46 @@
     </ul>
     <h4>Examples</h4>
 
-    <pre class='overflow-auto'><span class="hljs-keyword">var</span> sprite = <span class="hljs-keyword">new</span> ShelfPack({width: <span class="hljs-number">64</span>, height: <span class="hljs-number">64</span>});</pre>
+    <pre class='overflow-auto'><span class="hljs-keyword">var</span> sprite = <span class="hljs-keyword">new</span> ShelfPack(<span class="hljs-number">64</span>, <span class="hljs-number">64</span>, { autoGrow: <span class="hljs-literal">false</span> });</pre>
       <h4>Instance members</h4>
         <div class='collapsible' id='ShelfPack.allocate'>
           <a href='#ShelfPack.allocate'>
             <code>
-              #allocate<span class='gray'>(reqWidth, reqHeight)</span>
+              #allocate<span class='gray'>(w, h)</span>
             </code>
             <div class='force-inline'>
-              <p>Single bin allocator</p>
+              <p>Allocate a single bin into the sprite.</p>
 
             </div>
           </a>
           <div class='collapser border px2'>
 <section class='py2 clearfix'>
   <h2 id='ShelfPack.allocate' class='mt0'>
-    allocate<span class='gray'>(reqWidth, reqHeight)</span>
+    allocate<span class='gray'>(w, h)</span>
   </h2>
-    <p><a href='https://github.com/mapbox/shelf-pack/blob/76a161f108fb80f903d0ba34d0d2fe8cb6b55e8a/index.js#L71-L116'><code>index.js</code></a></p>
+    <p><a href='https://github.com/mapbox/shelf-pack/blob/777733214adea1e83067d34b5206afd3e644ad79/index.js#L82-L127'><code>index.js</code></a></p>
   
   
   
   
   
-  <p>Single bin allocator</p>
+  <p>Allocate a single bin into the sprite.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
- <strong>reqWidth</strong>
+ <strong>w</strong>
           :
           <div class='force-inline'>
-            <p>Requested bin width</p>
+            <p>Width of the bin to allocate</p>
 
           </div>
         </li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
- <strong>reqHeight</strong>
+ <strong>h</strong>
           :
           <div class='force-inline'>
-            <p>Requested bin height</p>
+            <p>Height of the bin to allocate</p>
 
           </div>
         </li>
@@ -143,31 +158,63 @@
         <p>Allocated bin object with <code>x</code>, <code>y</code>, <code>w</code>, <code>h</code> properties, or <code>null</code> if allocation failed</p>
 
       </div>
+    <h4>Examples</h4>
+
+    <pre class='overflow-auto'><span class="hljs-keyword">var</span> results = sprite.allocate(<span class="hljs-number">12</span>, <span class="hljs-number">16</span>);</pre>
+</section>
+          </div>
+        </div>
+        <div class='collapsible' id='ShelfPack.clear'>
+          <a href='#ShelfPack.clear'>
+            <code>
+              #clear<span class='gray'></span>
+            </code>
+            <div class='force-inline'>
+              <p>Clear the sprite.</p>
+
+            </div>
+          </a>
+          <div class='collapser border px2'>
+<section class='py2 clearfix'>
+  <h2 id='ShelfPack.clear' class='mt0'>
+    clear<span class='gray'></span>
+  </h2>
+    <p><a href='https://github.com/mapbox/shelf-pack/blob/777733214adea1e83067d34b5206afd3e644ad79/index.js#L135-L138'><code>index.js</code></a></p>
+  
+  
+  
+  
+  
+  <p>Clear the sprite.</p>
+
+    <h4>Examples</h4>
+
+    <pre class='overflow-auto'>sprite.clear();</pre>
 </section>
           </div>
         </div>
         <div class='collapsible' id='ShelfPack.pack'>
           <a href='#ShelfPack.pack'>
             <code>
-              #pack<span class='gray'>(bins, options)</span>
+              #pack<span class='gray'>(bins, [options])</span>
             </code>
             <div class='force-inline'>
-              <p>Batch bin allocator</p>
+              <p>Batch allocate multiple bins into the sprite.</p>
 
             </div>
           </a>
           <div class='collapser border px2'>
 <section class='py2 clearfix'>
   <h2 id='ShelfPack.pack' class='mt0'>
-    pack<span class='gray'>(bins, options)</span>
+    pack<span class='gray'>(bins, [options])</span>
   </h2>
-    <p><a href='https://github.com/mapbox/shelf-pack/blob/76a161f108fb80f903d0ba34d0d2fe8cb6b55e8a/index.js#L37-L61'><code>index.js</code></a></p>
+    <p><a href='https://github.com/mapbox/shelf-pack/blob/777733214adea1e83067d34b5206afd3e644ad79/index.js#L47-L71'><code>index.js</code></a></p>
   
   
   
   
   
-  <p>Batch bin allocator</p>
+  <p>Batch allocate multiple bins into the sprite.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
@@ -175,11 +222,12 @@
  <strong>bins</strong>
           :
           <div class='force-inline'>
-            <p>Array of requested bins - each object should have <code>width</code> and <code>height</code> properties</p>
+            <p>Array of requested bins - each object should have <code>width</code>, <code>height</code> (or <code>w</code>, <code>h</code>) properties</p>
 
           </div>
         </li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+=
  <strong>options</strong>
           :
           <div class='force-inline'>
@@ -203,49 +251,57 @@
         <p>Array of allocated bins - each bin is an object with <code>x</code>, <code>y</code>, <code>w</code>, <code>h</code> properties</p>
 
       </div>
+    <h4>Examples</h4>
+
+    <pre class='overflow-auto'><span class="hljs-keyword">var</span> bins = [
+    { id: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">12</span> },
+    { id: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">16</span> },
+    { id: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">24</span> }
+];
+<span class="hljs-keyword">var</span> results = sprite.pack(bins, { inPlace: <span class="hljs-literal">false</span> });</pre>
 </section>
           </div>
         </div>
         <div class='collapsible' id='ShelfPack.resize'>
           <a href='#ShelfPack.resize'>
             <code>
-              #resize<span class='gray'>(reqWidth, reqHeight)</span>
+              #resize<span class='gray'>(w, h)</span>
             </code>
             <div class='force-inline'>
-              <p>Resizes the sprite
-The resize will fail if the requested dimensions are smaller than the current sprite dimensions</p>
+              <p>Resize the sprite.
+The resize will fail if the requested dimensions are smaller than the current sprite dimensions.</p>
 
             </div>
           </a>
           <div class='collapser border px2'>
 <section class='py2 clearfix'>
   <h2 id='ShelfPack.resize' class='mt0'>
-    resize<span class='gray'>(reqWidth, reqHeight)</span>
+    resize<span class='gray'>(w, h)</span>
   </h2>
-    <p><a href='https://github.com/mapbox/shelf-pack/blob/76a161f108fb80f903d0ba34d0d2fe8cb6b55e8a/index.js#L127-L137'><code>index.js</code></a></p>
+    <p><a href='https://github.com/mapbox/shelf-pack/blob/777733214adea1e83067d34b5206afd3e644ad79/index.js#L150-L161'><code>index.js</code></a></p>
   
   
   
   
   
-  <p>Resizes the sprite
-The resize will fail if the requested dimensions are smaller than the current sprite dimensions</p>
+  <p>Resize the sprite.
+The resize will fail if the requested dimensions are smaller than the current sprite dimensions.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
- <strong>reqWidth</strong>
+ <strong>w</strong>
           :
           <div class='force-inline'>
-            <p>Requested sprite width</p>
+            <p>Requested new sprite width</p>
 
           </div>
         </li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
- <strong>reqHeight</strong>
+ <strong>h</strong>
           :
           <div class='force-inline'>
-            <p>Requested sprite height</p>
+            <p>Requested new sprite height</p>
 
           </div>
         </li>
@@ -255,9 +311,12 @@ The resize will fail if the requested dimensions are smaller than the current sp
 </code>
       :
       <div class='force-inline'>
-        <p>true if resize succeeded, false if failed</p>
+        <p><code>true</code> if resize succeeded, <code>false</code> if failed</p>
 
       </div>
+    <h4>Examples</h4>
+
+    <pre class='overflow-auto'>sprite.resize(<span class="hljs-number">256</span>, <span class="hljs-number">256</span>);</pre>
 </section>
           </div>
         </div>
