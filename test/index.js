@@ -160,6 +160,30 @@ test('ShelfPack', function(t) {
         t.end();
     });
 
+    t.test('autoResize grows sprite dimensions by width then height', function(t) {
+        var sprite = new ShelfPack(10, 10, { autoResize: true });
+        t.deepEqual(sprite.allocate(10, 10), { x: 0,  y: 0,  w: 10, h: 10, width: 10, height: 10 }, 'first 10x10 bin');
+        t.same([sprite.w, sprite.h], [10, 10]);
+        t.deepEqual(sprite.allocate(10, 10), { x: 10, y: 0,  w: 10, h: 10, width: 10, height: 10 }, 'second 10x10 bin');
+        t.same([sprite.w, sprite.h], [20, 10]);
+        t.deepEqual(sprite.allocate(10, 10), { x: 0,  y: 10, w: 10, h: 10, width: 10, height: 10 }, 'third 10x10 bin');
+        t.same([sprite.w, sprite.h], [20, 20]);
+        t.deepEqual(sprite.allocate(10, 10), { x: 10, y: 10, w: 10, h: 10, width: 10, height: 10 }, 'fourth 10x10 bin');
+        t.same([sprite.w, sprite.h], [20, 20]);
+        t.deepEqual(sprite.allocate(10, 10), { x: 20, y: 0,  w: 10, h: 10, width: 10, height: 10 }, 'fifth 10x10 bin');
+        t.same([sprite.w, sprite.h], [40, 20]);
+        t.end();
+    });
+
+    t.test('autoResize accomodates big bin requests', function(t) {
+        var sprite = new ShelfPack(10, 10, { autoResize: true });
+        t.deepEqual(sprite.allocate(20, 10), { x: 0,  y: 0,  w: 20, h: 10, width: 20, height: 10 }, '20x10 bin');
+        t.same([sprite.w, sprite.h], [40, 10]);
+        t.deepEqual(sprite.allocate(10, 40), { x: 0,  y: 10, w: 10, h: 40, width: 10, height: 40 }, '40x10 bin');
+        t.same([sprite.w, sprite.h], [40, 80]);
+        t.end();
+    });
+
     t.test('clear succeeds', function(t) {
         var sprite = new ShelfPack(10, 10);
         t.deepEqual(sprite.allocate(10, 10), { x: 0, y: 0, w: 10, h: 10, width: 10, height: 10 }, 'first 10x10 bin');

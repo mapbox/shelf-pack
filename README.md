@@ -43,17 +43,19 @@ BinPack allocate random height and width bins x 1.95 ops/sec ±4.81% (9 runs sam
 
 ### Usage
 
+#### Basic
+
 ```js
 var ShelfPack = require('shelf-pack');
-
 
 // Initialize the sprite with a width and height..
 var sprite = new ShelfPack(64, 64);
 
-
-// Allocate bins one at a time..
+// Pack bins one at a time..
 for (var i = 0; i < 5; i++) {
-    var bin = sprite.allocate(32, 32);   // width, height
+    var bin = sprite.allocate(32, 32);   // request width, height
+    // returns an bin object with `x`, `y`, `w`, `h`, `width`, `height` properties..
+
     if (bin) {
         console.log('bin packed at ' + bin.x + ', ' + bin.y);
     } else {
@@ -61,26 +63,55 @@ for (var i = 0; i < 5; i++) {
     }
 }
 
-
 // Clear sprite and start over..
 sprite.clear();
 
+// Or, resize sprite by passing larger dimensions..
+sprite.resize(128, 128);   // width, height
 
-// Bins can also be allocated in batches..
+```
+
+
+#### Batch packing
+
+```js
+var ShelfPack = require('shelf-pack');
+
+// If you don't want to think about the size of the sprite,
+// the `autoResize` option will allow it to grow as needed..
+var sprite = new ShelfPack(10, 10, { autoResize: true });
+
+// Bins can be allocated in batches..
+// Each bin should have `width`, `height` (or `w`, `h`) properties..
 var bins = [
     { id: 'a', width: 10, height: 10 },
-    { id: 'b', width: 10, height: 10 },
-    { id: 'c', width: 10, height: 10 }
+    { id: 'b', width: 10, height: 12 },
+    { id: 'c', w: 10, h: 12 },
+    { id: 'd', w: 10, h: 10 }
 ];
 
 var results = sprite.pack(bins);
+// returns an Array of packed bins objects with `x`, `y`, `w`, `h`, `width`, `height` properties..
+
 results.forEach(function(bin) {
     console.log('bin packed at ' + bin.x + ', ' + bin.y);
 });
 
 
-// Resize sprite by passing larger dimensions..
-sprite.resize(128, 128);   // width, height
+// If you don't mind letting ShelfPack modify your objects,
+// the `inPlace` option will decorate your bin objects with `x` and `y` properties.
+// Fancy!
+var moreBins = [
+    { id: 'e', width: 12, height: 24 },
+    { id: 'f', width: 12, height: 12 },
+    { id: 'g', w: 10, h: 10 }
+];
+
+sprite.pack(moreBins, { inPlace: true });
+moreBins.forEach(function(bin) {
+    console.log('bin packed at ' + bin.x + ', ' + bin.y);
+});
+
 
 ```
 

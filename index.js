@@ -13,9 +13,9 @@ module.exports = ShelfPack;
  * @param  {number}  [w=64]  Initial width of the sprite
  * @param  {number}  [h=64]  Initial width of the sprite
  * @param  {Object}  [options]
- * @param  {boolean} [options.autoGrow=false]  If `true`, the sprite will automatically grow
+ * @param  {boolean} [options.autoResize=false]  If `true`, the sprite will automatically grow
  * @example
- * var sprite = new ShelfPack(64, 64, { autoGrow: false });
+ * var sprite = new ShelfPack(64, 64, { autoResize: false });
  */
 function ShelfPack(w, h, options) {
     options = options || {};
@@ -114,7 +114,7 @@ ShelfPack.prototype.allocate = function(w, h) {
         return shelf.alloc(w, h);
     }
 
-    // add shelf
+    // add shelf..
     if (h <= (this.h - y) && w <= this.w) {
         shelf = new Shelf(y, this.w, h);
         this.shelves.push(shelf);
@@ -122,7 +122,28 @@ ShelfPack.prototype.allocate = function(w, h) {
         return shelf.alloc(w, h);
     }
 
-    // no more space
+    // no more space..
+    // If `autoResize` option is set, grow the sprite as follows:
+    //  * double whichever sprite dimension is smaller (`w1` or `h1`)
+    //  * if sprite dimensions are equal, grow width before height
+    //  * accomodate very large bin requests (big `w` or `h`)
+    if (this.autoResize) {
+        var h1, h2, w1, w2;
+
+        h1 = h2 = this.h;
+        w1 = w2 = this.w;
+
+        if (w1 <= h1 || w > w1) {   // grow width..
+            w2 = Math.max(w, w1) * 2;
+        }
+        if (h1 < w1 || h > h1) {    // grow height..
+            h2 = Math.max(h, h1) * 2;
+        }
+
+        this.resize(w2, h2);
+        return this.allocate(w, h);  // retry
+    }
+
     return null;
 };
 
