@@ -33,36 +33,36 @@ var suite = new Benchmark.Suite();
 
 suite
     .add('ShelfPack allocate fixed bins', function(t) {
-        var pack = new ShelfPack({ w: dim, h: dim }).pack(fixedBoth);
-        // var ok = true;
-        // for (var j = 0; j < N; j++) {
-        //     ok = pack.allocate({ w: fixedBoth[j].width, h: fixedBoth[j].height });
-        //     if (!ok) throw 'out of space';
-        // }
+        var pack = new ShelfPack(dim, dim);//.pack(fixedBoth);
+        var ok = true;
+        for (var j = 0; j < N; j++) {
+            ok = pack.allocate(fixedBoth[j].width, fixedBoth[j].height);
+            if (!ok) throw 'out of space';
+        }
     })
     .add('ShelfPack allocate random width bins', function(t) {
-        var pack = new ShelfPack({ w: dim, h: dim }).pack(randWidth);
-        // var ok = true;
-        // for (var j = 0; j < N; j++) {
-        //     ok = pack.allocate({ w: randWidth[j].width, h: randWidth[j].height });
-        //     if (!ok) throw 'out of space';
-        // }
+        var pack = new ShelfPack(dim, dim);//.pack(randWidth);
+        var ok = true;
+        for (var j = 0; j < N; j++) {
+            ok = pack.allocate(randWidth[j].width, randWidth[j].height);
+            if (!ok) throw 'out of space';
+        }
     })
     .add('ShelfPack allocate random height bins', function(t) {
-        var pack = new ShelfPack({ w: dim, h: dim }).pack(randHeight);
-        // var ok = true;
-        // for (var j = 0; j < N; j++) {
-        //     ok = pack.allocate({ w: randHeight[j].width, h: randHeight[j].height });
-        //     if (!ok) throw 'out of space';
-        // }
+        var pack = new ShelfPack(dim, dim);//.pack(randHeight);
+        var ok = true;
+        for (var j = 0; j < N; j++) {
+            ok = pack.allocate(randHeight[j].width, randHeight[j].height);
+            if (!ok) throw 'out of space';
+        }
     })
     .add('ShelfPack allocate random height and width bins', function(t) {
-        var pack = new ShelfPack({ w: dim, h: dim }).pack(randBoth);
-        // var ok = true;
-        // for (var j = 0; j < N; j++) {
-        //     ok = pack.allocate({ w: randBoth[j].width, h: randBoth[j].height });
-        //     if (!ok) throw 'out of space';
-        // }
+        var pack = new ShelfPack(dim, dim);//.pack(randBoth);
+        var ok = true;
+        for (var j = 0; j < N; j++) {
+            ok = pack.allocate(randBoth[j].width, randBoth[j].height);
+            if (!ok) throw 'out of space';
+        }
     })
     .add('BinPack allocate fixed bins', function(t) {
         var pack = BinPack(fixedBoth);

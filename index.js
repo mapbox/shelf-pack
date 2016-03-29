@@ -10,17 +10,17 @@ module.exports = ShelfPack;
  * http://clb.demon.fi/files/RectangleBinPack.pdf
  *
  * @class  ShelfPack
- * @param  {Object}  options
- * @param  {number}  [options.width=64]        Initial width of the sprite
- * @param  {number}  [options.height=64]       Initial width of the sprite
+ * @param  {number}  [w=64]  Initial width of the sprite
+ * @param  {number}  [h=64]  Initial width of the sprite
+ * @param  {Object}  [options]
  * @param  {boolean} [options.autoGrow=false]  If `true`, the sprite will automatically grow
  * @example
- * var sprite = new ShelfPack({ width: 64, height: 64 });
+ * var sprite = new ShelfPack(64, 64, { autoGrow: false });
  */
-function ShelfPack(options) {
+function ShelfPack(w, h, options) {
     options = options || {};
-    this.w = options.w || options.width || 64;
-    this.h = options.h || options.height || 64;
+    this.w = w || 64;
+    this.h = h || 64;
     this.autoResize = !!options.autoResize;
     this.shelves = [];
     this.stats = {};
@@ -33,7 +33,7 @@ function ShelfPack(options) {
  * Batch allocate multiple bins into the sprite.
  *
  * @param   {Array}   bins Array of requested bins - each object should have `width` and `height` properties
- * @param   {Object}  options
+ * @param   {Object}  [options]
  * @param   {boolean} [options.inPlace=false] If `true`, the supplied bin objects will be updated inplace with `x` and `y` properties
  * @returns {Array}   Array of allocated bins - each bin is an object with `x`, `y`, `w`, `h` properties
  * @example
@@ -42,7 +42,7 @@ function ShelfPack(options) {
  *     { id: 'b', width: 12, height: 16 },
  *     { id: 'c', width: 12, height: 24 }
  * ];
- * var results = sprite.pack(bins, { inPlace: true });
+ * var results = sprite.pack(bins, { inPlace: false });
  */
 ShelfPack.prototype.pack = function(bins, options) {
     bins = [].concat(bins);
@@ -55,7 +55,7 @@ ShelfPack.prototype.pack = function(bins, options) {
         w = bins[i].w || bins[i].width;
         h = bins[i].h || bins[i].height;
         if (w && h) {
-            allocation = this.allocate({ w: w, h: h });
+            allocation = this.allocate(w, h);
             if (!allocation) {
                 continue;
             }
@@ -73,17 +73,14 @@ ShelfPack.prototype.pack = function(bins, options) {
 /**
  * Allocate a single bin into the sprite.
  *
- * @param   {Object}  options
- * @param   {number}  options.width   Width of the bin to allocate
- * @param   {number}  options.height  Height of the bin to allocate
+ * @param   {number}  w   Width of the bin to allocate
+ * @param   {number}  h   Height of the bin to allocate
  * @returns {Object}  Allocated bin object with `x`, `y`, `w`, `h` properties, or `null` if allocation failed
  * @example
- * var results = sprite.allocate({ width: 12, height: 16 });
+ * var results = sprite.allocate(12, 16);
  */
-ShelfPack.prototype.allocate = function(options) {
-    var w = options.w || options.width,
-        h = options.h || options.height,
-        y = 0,
+ShelfPack.prototype.allocate = function(w, h) {
+    var y = 0,
         best = { shelf: -1, waste: Infinity },
         shelf, waste;
 
@@ -95,7 +92,7 @@ ShelfPack.prototype.allocate = function(options) {
         // exactly the right height with width to spare, pack it..
         if (h === shelf.h && w <= shelf.free) {
             this.count(h);
-            return shelf.alloc({ w: w, h: h });
+            return shelf.alloc(w, h);
         }
         // not enough height or width, skip it..
         if (h > shelf.h || w > shelf.free) {
@@ -114,15 +111,15 @@ ShelfPack.prototype.allocate = function(options) {
     if (best.shelf !== -1) {
         shelf = this.shelves[best.shelf];
         this.count(h);
-        return shelf.alloc({ w: w, h: h });
+        return shelf.alloc(w, h);
     }
 
     // add shelf
     if (h <= (this.h - y) && w <= this.w) {
-        shelf = new Shelf({ y: y, w: this.w, h: h });
+        shelf = new Shelf(y, this.w, h);
         this.shelves.push(shelf);
         this.count(h);
-        return shelf.alloc({ w: w, h: h });
+        return shelf.alloc(w, h);
     }
 
     // no more space
@@ -133,17 +130,13 @@ ShelfPack.prototype.allocate = function(options) {
  * Resize the sprite.
  * The resize will fail if the requested dimensions are smaller than the current sprite dimensions.
  *
- * @param   {Object}  options
- * @param   {number}  options.width   Requested new sprite width
- * @param   {number}  options.height  Requested new sprite height
- * @returns {boolean} true if resize succeeded, false if failed
+ * @param   {number}  w  Requested new sprite width
+ * @param   {number}  h  Requested new sprite height
+ * @returns {boolean} `true` if resize succeeded, `false` if failed
  * @example
- * sprite.resize({ width: 512, height: 512 });
+ * sprite.resize(256, 256);
  */
-ShelfPack.prototype.resize = function(options) {
-    var w = options.w || options.width,
-        h = options.h || options.height;
-
+ShelfPack.prototype.resize = function(w, h) {
     if (w < this.w || h < this.h) {
         return false;
     }
@@ -163,18 +156,13 @@ ShelfPack.prototype.resize = function(options) {
  *
  * @private
  * @class  Shelf
- * @param  {Object}  options
- * @param  {number}  options.y       Top coordinate of the new shelf
- * @param  {number}  options.width   Width of the new shelf
- * @param  {number}  options.height  Height of the new shelf
+ * @param  {number}  y   Top coordinate of the new shelf
+ * @param  {number}  w   Width of the new shelf
+ * @param  {number}  h   Height of the new shelf
  * @example
- * var shelf = new Shelf({ y: 24, width: 512, height: 24 });
+ * var shelf = new Shelf(64, 512, 24);
  */
-function Shelf(options) {
-    var y = options.y,
-        w = options.width || options.w,
-        h = options.height || options.h;
-
+function Shelf(y, w, h) {
     this.x = 0;
     this.y = y;
     this.w = this.free = w;
@@ -185,17 +173,13 @@ function Shelf(options) {
  * Allocate a single bin into the shelf.
  *
  * @private
- * @param   {Object}  options
- * @param   {number}  options.width   Width of the bin to allocate
- * @param   {number}  options.height  Height of the bin to allocate
+ * @param   {number}  w   Width of the bin to allocate
+ * @param   {number}  h   Height of the bin to allocate
  * @returns {Object}  Allocated bin object with `x`, `y`, `w`, `h` properties, or `null` if allocation failed
  * @example
- * shelf.alloc({ width: 12, height: 16 });
+ * shelf.alloc(12, 16);
  */
-Shelf.prototype.alloc = function(options) {
-    var w = options.w || options.width,
-        h = options.h || options.height;
-
+Shelf.prototype.alloc = function(w, h) {
     if (w > this.free || h > this.h) {
         return null;
     }
