@@ -46,21 +46,41 @@ BinPack allocate random height and width bins x 1.95 ops/sec ±4.81% (9 runs sam
 ```js
 var ShelfPack = require('shelf-pack');
 
-// initialize the space
-var sprite = new ShelfPack({w: 64, h: 64});
 
-// allocate bins
+// Initialize the sprite with a width and height..
+var sprite = new ShelfPack(64, 64);
+
+
+// Allocate bins one at a time..
 for (var i = 0; i < 5; i++) {
-    var position = sprite.allocate(32, 32);
-    if (position) {
-        console.log('ok');
+    var bin = sprite.allocate(32, 32);   // width, height
+    if (bin) {
+        console.log('bin packed at ' + bin.x + ', ' + bin.y);
     } else {
         console.log('out of space');
     }
 }
 
-// resize
-sprite.resize(128, 128);
+
+// Clear sprite and start over..
+sprite.clear();
+
+
+// Bins can also be allocated in batches..
+var bins = [
+    { id: 'a', width: 10, height: 10 },
+    { id: 'b', width: 10, height: 10 },
+    { id: 'c', width: 10, height: 10 }
+];
+
+var results = sprite.pack(bins);
+results.forEach(function(bin) {
+    console.log('bin packed at ' + bin.x + ', ' + bin.y);
+});
+
+
+// Resize sprite by passing larger dimensions..
+sprite.resize(128, 128);   // width, height
 
 ```
 

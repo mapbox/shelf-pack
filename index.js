@@ -32,7 +32,7 @@ function ShelfPack(w, h, options) {
 /**
  * Batch allocate multiple bins into the sprite.
  *
- * @param   {Array}   bins Array of requested bins - each object should have `width` and `height` properties
+ * @param   {Array}   bins Array of requested bins - each object should have `width`, `height` (or `w`, `h`) properties
  * @param   {Object}  [options]
  * @param   {boolean} [options.inPlace=false] If `true`, the supplied bin objects will be updated inplace with `x` and `y` properties
  * @returns {Array}   Array of allocated bins - each bin is an object with `x`, `y`, `w`, `h` properties
@@ -124,6 +124,17 @@ ShelfPack.prototype.allocate = function(w, h) {
 
     // no more space
     return null;
+};
+
+/**
+ * Clear the sprite.
+ *
+ * @example
+ * sprite.clear();
+ */
+ShelfPack.prototype.clear = function() {
+    this.shelves = [];
+    this.stats = {};
 };
 
 /**
