@@ -183,6 +183,25 @@ test('ShelfPack', function(t) {
         t.same([sprite.w, sprite.h], [40, 80]);
         t.end();
     });
+    
+    t.test('minimal sprite width and height', function(t) {
+        var bins = [
+            { id: 'a', width: 10, height: 10 },
+            { id: 'b', width: 5, height: 15 },
+            { id: 'c', width: 25, height: 15 },
+            { id: 'd', width: 10, height: 20 }
+        ];
+    
+        var sprite = new ShelfPack(10, 10, { autoResize: true });
+        sprite.pack(bins);
+
+        // Since shelf-pack doubles width/height when packing bins one by one
+        // (first width, then height) this would result in a 50x60 sprite here. 
+        // But this can be shrunk to a 30x45 sprite.       
+        t.same([sprite.w, sprite.h], [30, 45]);
+        
+        t.end();
+    });
 
     t.test('clear succeeds', function(t) {
         var sprite = new ShelfPack(10, 10);
