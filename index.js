@@ -74,13 +74,14 @@ ShelfPack.prototype.pack = function(bins, options) {
     if (this.shelves.length > 0) {
         var w2 = 0;
         var h2 = 0;
+        
         for (var j = 0; j < this.shelves.length; j++) {
             var shelf = this.shelves[j];
             h2 += shelf.h;  
             w2 = Math.max(shelf.w - shelf.free, w2);  
         }
-        this.w = w2;
-        this.h = h2;        
+        
+        this.resize(w2, h2);       
     }
        
     return results;
@@ -176,7 +177,6 @@ ShelfPack.prototype.clear = function() {
 
 /**
  * Resize the sprite.
- * The resize will fail if the requested dimensions are smaller than the current sprite dimensions.
  *
  * @param   {number}  w  Requested new sprite width
  * @param   {number}  h  Requested new sprite height
@@ -185,10 +185,6 @@ ShelfPack.prototype.clear = function() {
  * sprite.resize(256, 256);
  */
 ShelfPack.prototype.resize = function(w, h) {
-    if (w < this.w || h < this.h) {
-        return false;
-    }
-
     this.w = w;
     this.h = h;
     for (var i = 0; i < this.shelves.length; i++) {
@@ -239,7 +235,6 @@ Shelf.prototype.alloc = function(w, h) {
 
 /**
  * Resize the shelf.
- * The resize will fail if the requested width is smaller than the current shelf width.
  *
  * @private
  * @param   {number}  w  Requested new width of the shelf
@@ -248,9 +243,6 @@ Shelf.prototype.alloc = function(w, h) {
  * shelf.resize(512);
  */
 Shelf.prototype.resize = function(w) {
-    if (w < this.w) {
-        return false;
-    }
     this.free += (w - this.w);
     this.w = w;
     return true;

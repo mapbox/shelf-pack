@@ -223,12 +223,5 @@ test('ShelfPack', function(t) {
         t.end();
     });
 
-    t.test('resize smaller fails', function(t) {
-        var sprite = new ShelfPack(10, 10);
-        t.notOk(sprite.resize(10, 9));
-        t.notOk(sprite.resize(9, 10));
-        t.end();
-    });
-
     t.end();
 });
