@@ -17,7 +17,7 @@
     "benchmark": "^2.1.0",
     "bin-pack": "1.0.2",
     "documentation": "^4.0.0-beta",
-    "eslint": "^1.6.0",
+    "eslint": "3.0.0",
     "retire": "*",
     "tap": "^2.1.1"
   },
