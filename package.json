@@ -11,18 +11,17 @@
   },
   "bugs": "https://github.com/mapbox/shelf-pack/issues",
   "keywords": [
-    "bin packing", "sprite"
+    "bin packing",
+    "sprite"
   ],
   "devDependencies": {
-    "benchmark": "^2.1.0",
+    "benchmark": "2.1.0",
     "bin-pack": "1.0.2",
-    "documentation": "^4.0.0-beta",
+    "documentation": "4.0.0-beta",
     "eslint": "3.0.0",
-    "retire": "*",
-    "tap": "^2.1.1"
+    "tap": "6.1.1"
   },
   "scripts": {
-    "retire": "retire -p",
     "lint": "eslint *.js test",
     "docs": "documentation build --lint --github --format html --output docs/",
     "test": "npm run lint && tap --cov test/*.js",
