@@ -21,6 +21,9 @@
     "eslint": "3.0.1",
     "tap": "6.1.1"
   },
+  "engines": {
+    "node" : ">=4.0.0"
+  },
   "scripts": {
     "lint": "eslint *.js test",
     "docs": "documentation build --lint --github --format html --output docs/",
