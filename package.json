@@ -19,10 +19,10 @@
     "bin-pack": "1.0.2",
     "documentation": "4.0.0-beta",
     "eslint": "3.0.1",
-    "tap": "6.1.1"
+    "tap": "6.2.0"
   },
   "engines": {
-    "node" : ">=4.0.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "lint": "eslint *.js test",
