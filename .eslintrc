@@ -1,5 +1,16 @@
 {
-    "extends": "eslint:recommended",
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
     "rules": {
         "dot-notation": 2,
         "eqeqeq": [2, "smart"],
@@ -48,9 +59,5 @@
         "space-unary-ops": 2,
         "wrap-regex": 0,
         "quotes": [2, "single"]
-    },
-    "env": {
-        "browser": true,
-        "node": true
     }
 }

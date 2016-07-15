@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = ShelfPack;
+export { ShelfPack as default };
 
 
 /**

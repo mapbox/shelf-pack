@@ -2,7 +2,8 @@
   "name": "shelf-pack",
   "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.umd.js",
+  "jsnext:main": "index.js",
   "license": "ISC",
   "author": "Bryan Housel <bryan@mapbox.com>",
   "repository": {
@@ -19,14 +20,16 @@
     "bin-pack": "1.0.2",
     "documentation": "4.0.0-beta",
     "eslint": "3.0.1",
+    "rollup": "0.34.1",
     "tap": "6.1.1"
   },
   "engines": {
     "node" : ">=4.0.0"
   },
   "scripts": {
-    "lint": "eslint *.js test",
-    "docs": "documentation build --lint --github --format html --output docs/",
+    "pretest": "node_modules/.bin/rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
+    "lint": "eslint index.js test/ bench/",
+    "docs": "documentation build index.js --lint --github --format html --output docs/",
     "test": "npm run lint && tap --cov test/*.js",
     "bench": "node bench/bench.js"
   }

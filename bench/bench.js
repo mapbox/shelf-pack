@@ -32,67 +32,69 @@ for (var i = 0; i < N; i++) {
 var suite = new Benchmark.Suite();
 
 suite
-    .add('ShelfPack batch allocate fixed size bins', function(t) {
-        var pack = new ShelfPack(dim, dim).pack(fixedBoth);
+    .add('ShelfPack batch allocate fixed size bins', function() {
+        new ShelfPack(dim, dim).pack(fixedBoth);
     })
-    .add('ShelfPack batch allocate random width bins', function(t) {
-        var pack = new ShelfPack(dim, dim).pack(randWidth);
+    .add('ShelfPack batch allocate random width bins', function() {
+        new ShelfPack(dim, dim).pack(randWidth);
     })
-    .add('ShelfPack batch allocate random height bins', function(t) {
-        var pack = new ShelfPack(dim, dim).pack(randHeight);
+    .add('ShelfPack batch allocate random height bins', function() {
+        new ShelfPack(dim, dim).pack(randHeight);
     })
-    .add('ShelfPack batch allocate random height and width bins', function(t) {
-        var pack = new ShelfPack(dim, dim).pack(randBoth);
+    .add('ShelfPack batch allocate random height and width bins', function() {
+        new ShelfPack(dim, dim).pack(randBoth);
     })
-    .add('ShelfPack single allocate fixed size bins', function(t) {
+    .add('ShelfPack single allocate fixed size bins', function() {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.packOne(fixedBoth[j].width, fixedBoth[j].height);
-            if (!ok) throw 'out of space';
+            if (!ok) throw new Error('out of space');
         }
     })
-    .add('ShelfPack single allocate random width bins', function(t) {
+    .add('ShelfPack single allocate random width bins', function() {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.packOne(randWidth[j].width, randWidth[j].height);
-            if (!ok) throw 'out of space';
+            if (!ok) throw new Error('out of space');
         }
     })
-    .add('ShelfPack single allocate random height bins', function(t) {
+    .add('ShelfPack single allocate random height bins', function() {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.packOne(randHeight[j].width, randHeight[j].height);
-            if (!ok) throw 'out of space';
+            if (!ok) throw new Error('out of space');
         }
     })
-    .add('ShelfPack single allocate random height and width bins', function(t) {
+    .add('ShelfPack single allocate random height and width bins', function() {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
         for (var j = 0; j < N; j++) {
             ok = pack.packOne(randBoth[j].width, randBoth[j].height);
-            if (!ok) throw 'out of space';
+            if (!ok) throw new Error('out of space');
         }
     })
-    .add('BinPack batch allocate fixed size bins', function(t) {
-        var pack = BinPack(fixedBoth);
+    .add('BinPack batch allocate fixed size bins', function() {
+        BinPack(fixedBoth);
     })
-    .add('BinPack batch allocate random width bins', function(t) {
-        var pack = BinPack(randWidth);
+    .add('BinPack batch allocate random width bins', function() {
+        BinPack(randWidth);
     })
-    .add('BinPack batch allocate random height bins', function(t) {
-        var pack = BinPack(randHeight);
+    .add('BinPack batch allocate random height bins', function() {
+        BinPack(randHeight);
     })
-    .add('BinPack batch allocate random height and width bins', function(t) {
-        var pack = BinPack(randBoth);
+    .add('BinPack batch allocate random height and width bins', function() {
+        BinPack(randBoth);
     })
     .on('cycle', function(event) {
+        /* eslint-disable no-console */
         if (event.target.error) {
             console.log(event.target.name + ':  ERROR ' + event.target.error);
         } else {
             console.log(String(event.target));
         }
+        /* eslint-enable no-console */
     })
     .run();
