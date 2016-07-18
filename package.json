@@ -19,12 +19,12 @@
     "benchmark": "2.1.0",
     "bin-pack": "1.0.2",
     "documentation": "4.0.0-beta5",
-    "eslint": "3.1.0",
+    "eslint": "3.1.1",
     "rollup": "0.34.1",
     "tap": "6.2.0"
   },
   "engines": {
-    "node" : ">=4.0.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "pretest": "rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
