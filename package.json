@@ -20,7 +20,7 @@
     "bin-pack": "1.0.2",
     "documentation": "4.0.0-beta5",
     "eslint": "~3.2.2",
-    "rollup": "0.34.1",
+    "rollup": "0.34.3",
     "tap": "~6.3.0"
   },
   "engines": {
