@@ -95,8 +95,8 @@ ShelfPack.prototype.pack = function(bins, options) {
 
 /**
  * Pack a single bin into the sprite.
- * Bins can be associated with a unique identitifer.  If no identifier is
- * supplied in the `id` parameter, one will be created
+ * Bins can be associated with a unique identitifer.
+ * If no identifier is supplied in the `id` parameter, one will be created.
  *
  * @param   {number}  w     Width of the bin to allocate
  * @param   {number}  h     Height of the bin to allocate
@@ -109,15 +109,15 @@ ShelfPack.prototype.packOne = function(w, h, id) {
     var y = 0,
         best, bin, shelf, waste, i;
 
-
-    bin = this.get(id);
-    if (bin) {
-        return bin;  // we packed this bin already
+    bin = this.getBin(id);
+    if (bin) {              // we packed this bin already
+        bin.ref();
+        return bin;
     } else {
         switch (typeof id) {
             case 'string': break;
             case 'number': id = id.toString(); break;
-            default: id = (this.nextId++).toString();
+            default: id = '__' + (this.nextId++).toString();
         }
     }
 
@@ -228,26 +228,33 @@ ShelfPack.prototype.packOne = function(w, h, id) {
 
 
 /**
- * Return a packed bin given its id, or null if it has not been packed
+ * Return a packed bin given its id, or undefined if the id is not found
  *
- * @param   {string}  id
+ * @param   {string}  id  Unique identifier for this bin,
+ * @returns {Object}  The requested bin, or undefined if not yet packed
  * @example
- * sprite.get('a');
+ * var b = sprite.getBin('a');
  */
-ShelfPack.prototype.get = function(id) {
+ShelfPack.prototype.getBin = function(id) {
     switch (typeof id) {
         case 'string': break;
         case 'number': id = id.toString(); break;
-        default: return null;
+        default: return undefined;
     }
-
-    return this.bins.hasOwnProperty(id) ? this.bins[id] : null;
+    return this.bins[id];
 };
 
+
 /**
+ * Increment the ref count of a bin
+ *
+ * @param   {string}  id  Unique identifier for this bin,
+ * @returns {number}  the new refcount of the bin, or null of the bin is not yet packed
+ * @example
+ * sprite.ref('a');
  */
 ShelfPack.prototype.ref = function(id) {
-    var bin = this.get(id);
+    var bin = this.getBin(id);
     if (bin) {
         return bin.ref();
     } else {
@@ -255,11 +262,19 @@ ShelfPack.prototype.ref = function(id) {
     }
 };
 
+
 /**
+ * Decrement the ref count of a bin.  The bin will be automatically marked
+ * as free space once the refcount reaches 0.
+ *
+ * @param   {string}  id  Unique identifier for this bin,
+ * @returns {number}  the new refcount of the bin, or null of the bin is not yet packed
+ * @example
+ * sprite.unref('a');
  */
 ShelfPack.prototype.unref = function(id) {
-    var bin = this.get(id);
-    if (bin) {
+    var bin = this.getBin(id);
+    if (bin && bin.refcount > 0) {
         var refcount = bin.unref();
         if (refcount === 0) {
             delete this.bins[id];
@@ -273,7 +288,7 @@ ShelfPack.prototype.unref = function(id) {
 
 
 /**
- * Clear the sprite.
+ * Clear the sprite.  Removes all shelves and bins, and resets statistics.
  *
  * @example
  * sprite.clear();
@@ -283,6 +298,7 @@ ShelfPack.prototype.clear = function() {
     this.freebins = [];
     this.stats = {};
     this.bins = {};
+    this.nextId = 1;
 };
 
 
@@ -364,13 +380,13 @@ Shelf.prototype.resize = function(w) {
 
 
 /**
- * Create a new Bin.
+ * Create a new Bin object.
  *
  * @private
  * @class  Bin
  * @param  {string}  id  Unique id of the bin
- * @param  {number}  x   x position of the bin
- * @param  {number}  y   y position of the bin
+ * @param  {number}  x   Left coordinate of the bin
+ * @param  {number}  y   Top coordinate of the bin
  * @param  {number}  w   Width of the bin
  * @param  {number}  h   Height of the bin
  * @example
@@ -386,14 +402,22 @@ function Bin(id, x, y, w, h) {
 }
 
 /**
- * Increment the bin's ref count
+ * Increment the ref count of a Bin.
+ *
+ * @returns {number}  the new refcount of the bin
+ * @example
+ * bin.ref();
  */
 Bin.prototype.ref = function() {
     return ++this.refcount;
 };
 
 /**
- * Decrement the bin's ref count
+ * Increment the ref count of a Bin.
+ *
+ * @returns {number}  the new refcount of the bin
+ * @example
+ * bin.unref();
  */
 Bin.prototype.unref = function() {
     return --this.refcount;
