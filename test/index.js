@@ -130,56 +130,56 @@ test('ShelfPack', function(t) {
 
     t.test('single allocates same height bins on existing shelf', function(t) {
         var sprite = new ShelfPack(64, 64);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
-        t.deepEqual(sprite.packOne(10, 10), { id: '__2', x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
-        t.deepEqual(sprite.packOne(10, 10), { id: '__3', x: 20, y: 0, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 20, y: 0, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
         t.end();
     });
 
     t.test('single allocates larger bins on new shelf', function(t) {
         var sprite = new ShelfPack(64, 64);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0, y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
-        t.deepEqual(sprite.packOne(10, 15), { id: '__2', x: 0, y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
-        t.deepEqual(sprite.packOne(10, 20), { id: '__3', x: 0, y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0, y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
+        t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0, y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
         t.end();
     });
 
     t.test('single allocates shorter bins on existing shelf, minimizing waste', function(t) {
         var sprite = new ShelfPack(64, 64);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
-        t.deepEqual(sprite.packOne(10, 15), { id: '__2', x: 0,  y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
-        t.deepEqual(sprite.packOne(10, 20), { id: '__3', x: 0,  y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
-        t.deepEqual(sprite.packOne(10, 9),  { id: '__4', x: 10, y: 0,  w: 10, h: 9,  refcount: 1 }, 'shelf 1, 10x9 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0,  y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
+        t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0,  y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
+        t.deepEqual(sprite.packOne(10, 9),  { id: 4, x: 10, y: 0,  w: 10, h: 9,  refcount: 1 }, 'shelf 1, 10x9 bin');
         t.end();
     });
 
     t.test('not enough room', function(t) {
         var sprite = new ShelfPack(10, 10);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
         t.notOk(sprite.packOne(10, 10), 'not enough room');
         t.end();
     });
 
     t.test('autoResize grows sprite dimensions by width then height', function(t) {
         var sprite = new ShelfPack(10, 10, { autoResize: true });
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
         t.same([sprite.w, sprite.h], [10, 10]);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__2', x: 10, y: 0,  w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0,  w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
         t.same([sprite.w, sprite.h], [20, 10]);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__3', x: 0,  y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0,  y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
         t.same([sprite.w, sprite.h], [20, 20]);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__4', x: 10, y: 10, w: 10, h: 10, refcount: 1 }, 'fourth 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 4, x: 10, y: 10, w: 10, h: 10, refcount: 1 }, 'fourth 10x10 bin');
         t.same([sprite.w, sprite.h], [20, 20]);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__5', x: 20, y: 0,  w: 10, h: 10, refcount: 1 }, 'fifth 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 5, x: 20, y: 0,  w: 10, h: 10, refcount: 1 }, 'fifth 10x10 bin');
         t.same([sprite.w, sprite.h], [40, 20]);
         t.end();
     });
 
     t.test('autoResize accomodates big bin requests', function(t) {
         var sprite = new ShelfPack(10, 10, { autoResize: true });
-        t.deepEqual(sprite.packOne(20, 10), { id: '__1', x: 0,  y: 0,  w: 20, h: 10, refcount: 1 }, '20x10 bin');
+        t.deepEqual(sprite.packOne(20, 10), { id: 1, x: 0,  y: 0,  w: 20, h: 10, refcount: 1 }, '20x10 bin');
         t.same([sprite.w, sprite.h], [40, 10]);
-        t.deepEqual(sprite.packOne(10, 40), { id: '__2', x: 0,  y: 10, w: 10, h: 40, refcount: 1 }, '40x10 bin');
+        t.deepEqual(sprite.packOne(10, 40), { id: 2, x: 0,  y: 10, w: 10, h: 40, refcount: 1 }, '40x10 bin');
         t.same([sprite.w, sprite.h], [40, 80]);
         t.end();
     });
@@ -205,21 +205,21 @@ test('ShelfPack', function(t) {
 
     t.test('clear succeeds', function(t) {
         var sprite = new ShelfPack(10, 10);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
         t.notOk(sprite.packOne(10, 10), 'not enough room');
 
         sprite.clear();
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
         t.end();
     });
 
     t.test('resize larger succeeds', function(t) {
         var sprite = new ShelfPack(10, 10);
-        t.deepEqual(sprite.packOne(10, 10), { id: '__1', x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
         t.ok(sprite.resize(20, 10));
-        t.deepEqual(sprite.packOne(10, 10), { id: '__2', x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
         t.ok(sprite.resize(20, 20));
-        t.deepEqual(sprite.packOne(10, 10), { id: '__3', x: 0, y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+        t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0, y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
         t.end();
     });
 

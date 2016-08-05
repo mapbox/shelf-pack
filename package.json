@@ -27,10 +27,10 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "pretest": "rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
-    "lint": "eslint index.js test/ bench/",
+    "bench": "npm run build && node bench/bench.js",
+    "build": "rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
     "docs": "documentation build index.js --lint --github --format html --output docs/",
-    "test": "npm run lint && tap --cov test/*.js",
-    "bench": "node bench/bench.js"
+    "lint": "eslint index.js test/ bench/",
+    "test": "npm run build && npm run lint && tap --cov test/*.js"
   }
 }
