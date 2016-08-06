@@ -32,16 +32,16 @@ function ShelfPack(w, h, options) {
  * Batch pack multiple bins into the sprite.
  *
  * @param   {Object[]} bins       Array of requested bins - each object should have `width`, `height` (or `w`, `h`) properties
- * @param   {number}   bins[].w   Array of requested bins - each object should have `width`, `height` (or `w`, `h`) properties
- * @param   {number}   bins[].h   Array of requested bins - each object should have `width`, `height` (or `w`, `h`) properties
+ * @param   {number}   bins[].w   Requested bin width
+ * @param   {number}   bins[].h   Requested bin height
  * @param   {Object}   [options]
  * @param   {boolean}  [options.inPlace=false] If `true`, the supplied bin objects will be updated inplace with `x` and `y` properties
- * @returns {Bin[]}    Array of allocated bins - each bin is an object with `id`, `x`, `y`, `w`, `h` properties
+ * @returns {Bin[]}    Array of allocated Bins - each Bin is an object with `id`, `x`, `y`, `w`, `h` properties
  * @example
  * var bins = [
- *     { id: 'a', w: 12, h: 12 },
- *     { id: 'b', w: 12, h: 16 },
- *     { id: 'c', w: 12, h: 24 }
+ *     { id: 1, w: 12, h: 12 },
+ *     { id: 2, w: 12, h: 16 },
+ *     { id: 3, w: 12, h: 24 }
  * ];
  * var results = sprite.pack(bins, { inPlace: false });
  */
@@ -97,7 +97,7 @@ ShelfPack.prototype.pack = function(bins, options) {
  *
  * Each bin will have a unique identitifer.
  * If no identifier is supplied in the `id` parameter, one will be created.
- * Note: This `id` is used as an object index, so numeric values are fastest!
+ * Note: The supplied `id` is used as an object index, so numeric values are fastest!
  *
  * Bins are automatically refcounted (i.e. a newly packed Bin will have a refcount of 1).
  * When a bin is no longer needed, use the `ShelfPack.unref` function to mark it
@@ -107,7 +107,7 @@ ShelfPack.prototype.pack = function(bins, options) {
  * @param    {number}         w      Width of the bin to allocate
  * @param    {number}         h      Height of the bin to allocate
  * @param    {number|string}  [id]   Unique identifier for this bin, (if unsupplied, assume it's a new bin and create an id)
- * @returns  {Bin}                   Allocated Bin object with `id`, `x`, `y`, `w`, `h` properties, or `null` if allocation failed
+ * @returns  {Bin}            Bin object with `id`, `x`, `y`, `w`, `h` properties, or `null` if allocation failed
  * @example
  * var results = sprite.packOne(12, 16, 'a');
  */
@@ -252,16 +252,18 @@ ShelfPack.prototype.getBin = function(id) {
  * Increment the ref count of a bin and update statistics.
  *
  * @param    {Bin}     bin  Bin instance
- * @returns  {number}       New refcount of the bin
+ * @returns  {number}  New refcount of the bin
  * @example
  * var bin = sprite.getBin('a');
  * sprite.ref(bin);
  */
 ShelfPack.prototype.ref = function(bin) {
-    var h = bin.h;
-    this.stats[h] = (this.stats[h] | 0) + 1;
+    if (++bin.refcount === 1) {   // a new Bin.. record height in stats historgram..
+        var h = bin.h;
+        this.stats[h] = (this.stats[h] | 0) + 1;
+    }
 
-    return bin.ref();
+    return bin.refcount;
 };
 
 
@@ -270,7 +272,7 @@ ShelfPack.prototype.ref = function(bin) {
  * The bin will be automatically marked as free space once the refcount reaches 0.
  *
  * @param    {Bin}     bin  Bin instance
- * @returns  {number}       New refcount of the bin
+ * @returns  {number}  New refcount of the bin
  * @example
  * var bin = sprite.getBin('a');
  * sprite.unref(bin);
@@ -280,17 +282,13 @@ ShelfPack.prototype.unref = function(bin) {
         return 0;
     }
 
-    var h = bin.h;
-    if (this.stats[h]) {
-        this.stats[h]--;
-    }
-    var refcount = bin.unref();
-    if (refcount === 0) {
+    if (--bin.refcount === 0) {
+        this.stats[bin.h]--;
         delete this.bins[bin.id];
         this.freebins.push(bin);
     }
 
-    return refcount;
+    return bin.refcount;
 };
 
 
@@ -351,12 +349,12 @@ function Shelf(y, w, h) {
  * Allocate a single bin into the shelf.
  *
  * @private
- * @param   {number}  w   Width of the bin to allocate
- * @param   {number}  h   Height of the bin to allocate
- * @param   {number}  id  Unique id of the bin to allocate
- * @returns {Bin}         Allocated bin object with `id`, `x`, `y`, `w`, `h` properties, or `null` if allocation failed
+ * @param   {number}         w   Width of the bin to allocate
+ * @param   {number}         h   Height of the bin to allocate
+ * @param   {number|string}  id  Unique id of the bin to allocate
+ * @returns {Bin}            Bin object with `id`, `x`, `y`, `w`, `h` properties, or `null` if allocation failed
  * @example
- * shelf.alloc(12, 16);
+ * shelf.alloc(12, 16, 'a');
  */
 Shelf.prototype.alloc = function(w, h, id) {
     if (w > this.free || h > this.h) {
@@ -374,7 +372,7 @@ Shelf.prototype.alloc = function(w, h, id) {
  *
  * @private
  * @param   {number}  w  Requested new width of the shelf
- * @returns {boolean}    true if resize succeeded, false if failed
+ * @returns {boolean}    true
  * @example
  * shelf.resize(512);
  */
@@ -405,26 +403,4 @@ function Bin(id, x, y, w, h) {
     this.h  = h;
     this.refcount = 0;
 }
-
-/**
- * Increment the ref count of a Bin.
- *
- * @returns {number}  the new refcount of the bin
- * @example
- * bin.ref();
- */
-Bin.prototype.ref = function() {
-    return ++this.refcount;
-};
-
-/**
- * Increment the ref count of a Bin.
- *
- * @returns {number}  the new refcount of the bin
- * @example
- * bin.unref();
- */
-Bin.prototype.unref = function() {
-    return --this.refcount;
-};
 
