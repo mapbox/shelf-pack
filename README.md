@@ -30,14 +30,18 @@ Really fast!  `shelf-pack` is several orders of magnitude faster than the more g
 ```bash
 > npm run bench
 
-ShelfPack allocate fixed bins x 1,923 ops/sec ±1.44% (85 runs sampled)
-ShelfPack allocate random width bins x 1,707 ops/sec ±1.39% (84 runs sampled)
-ShelfPack allocate random height bins x 1,632 ops/sec ±2.07% (86 runs sampled)
-ShelfPack allocate random height and width bins x 1,212 ops/sec ±0.81% (89 runs sampled)
-BinPack allocate fixed bins x 2.26 ops/sec ±6.89% (10 runs sampled)
-BinPack allocate random width bins x 2.22 ops/sec ±7.21% (10 runs sampled)
-BinPack allocate random height bins x 2.21 ops/sec ±7.34% (10 runs sampled)
-BinPack allocate random height and width bins x 1.95 ops/sec ±4.81% (9 runs sampled)
+ShelfPack single allocate fixed size bins x 1,433 ops/sec ±0.85% (90 runs sampled)
+ShelfPack single allocate random width bins x 1,326 ops/sec ±1.28% (87 runs sampled)
+ShelfPack single allocate random height bins x 1,369 ops/sec ±0.93% (88 runs sampled)
+ShelfPack single allocate random height and width bins x 1,246 ops/sec ±0.86% (88 runs sampled)
+ShelfPack batch allocate fixed size bins x 1,347 ops/sec ±1.28% (87 runs sampled)
+ShelfPack batch allocate random width bins x 1,241 ops/sec ±1.00% (88 runs sampled)
+ShelfPack batch allocate random height bins x 1,250 ops/sec ±0.98% (87 runs sampled)
+ShelfPack batch allocate random height and width bins x 1,134 ops/sec ±1.20% (87 runs sampled)
+BinPack batch allocate fixed size bins x 2.21 ops/sec ±6.60% (10 runs sampled)
+BinPack batch allocate random width bins x 0.50 ops/sec ±2.25% (6 runs sampled)
+BinPack batch allocate random height bins x 0.51 ops/sec ±1.97% (6 runs sampled)
+BinPack batch allocate random height and width bins x 0.51 ops/sec ±1.37% (6 runs sampled)
 ```
 
 
