@@ -156,6 +156,7 @@ ShelfPack.prototype.packOne = function(w, h, id) {
         bin.id = id;
         bin.w = w;
         bin.h = h;
+        bin.refcount = 0;
         this.bins[id] = bin;
         this.ref(bin);
         return bin;
