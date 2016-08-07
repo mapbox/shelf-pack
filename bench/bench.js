@@ -32,18 +32,6 @@ for (var i = 0; i < N; i++) {
 var suite = new Benchmark.Suite();
 
 suite
-    .add('ShelfPack batch allocate fixed size bins', function() {
-        new ShelfPack(dim, dim).pack(fixedBoth);
-    })
-    .add('ShelfPack batch allocate random width bins', function() {
-        new ShelfPack(dim, dim).pack(randWidth);
-    })
-    .add('ShelfPack batch allocate random height bins', function() {
-        new ShelfPack(dim, dim).pack(randHeight);
-    })
-    .add('ShelfPack batch allocate random height and width bins', function() {
-        new ShelfPack(dim, dim).pack(randBoth);
-    })
     .add('ShelfPack single allocate fixed size bins', function() {
         var pack = new ShelfPack(dim, dim);
         var ok = true;
@@ -75,6 +63,18 @@ suite
             ok = pack.packOne(randBoth[j].width, randBoth[j].height);
             if (!ok) throw new Error('out of space');
         }
+    })
+    .add('ShelfPack batch allocate fixed size bins', function() {
+        new ShelfPack(dim, dim).pack(fixedBoth);
+    })
+    .add('ShelfPack batch allocate random width bins', function() {
+        new ShelfPack(dim, dim).pack(randWidth);
+    })
+    .add('ShelfPack batch allocate random height bins', function() {
+        new ShelfPack(dim, dim).pack(randHeight);
+    })
+    .add('ShelfPack batch allocate random height and width bins', function() {
+        new ShelfPack(dim, dim).pack(randBoth);
     })
     .add('BinPack batch allocate fixed size bins', function() {
         BinPack(fixedBoth);

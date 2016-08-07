@@ -30,20 +30,24 @@ Really fast!  `shelf-pack` is several orders of magnitude faster than the more g
 ```bash
 > npm run bench
 
-ShelfPack allocate fixed bins x 1,923 ops/sec ±1.44% (85 runs sampled)
-ShelfPack allocate random width bins x 1,707 ops/sec ±1.39% (84 runs sampled)
-ShelfPack allocate random height bins x 1,632 ops/sec ±2.07% (86 runs sampled)
-ShelfPack allocate random height and width bins x 1,212 ops/sec ±0.81% (89 runs sampled)
-BinPack allocate fixed bins x 2.26 ops/sec ±6.89% (10 runs sampled)
-BinPack allocate random width bins x 2.22 ops/sec ±7.21% (10 runs sampled)
-BinPack allocate random height bins x 2.21 ops/sec ±7.34% (10 runs sampled)
-BinPack allocate random height and width bins x 1.95 ops/sec ±4.81% (9 runs sampled)
+ShelfPack single allocate fixed size bins x 1,433 ops/sec ±0.85% (90 runs sampled)
+ShelfPack single allocate random width bins x 1,326 ops/sec ±1.28% (87 runs sampled)
+ShelfPack single allocate random height bins x 1,369 ops/sec ±0.93% (88 runs sampled)
+ShelfPack single allocate random height and width bins x 1,246 ops/sec ±0.86% (88 runs sampled)
+ShelfPack batch allocate fixed size bins x 1,347 ops/sec ±1.28% (87 runs sampled)
+ShelfPack batch allocate random width bins x 1,241 ops/sec ±1.00% (88 runs sampled)
+ShelfPack batch allocate random height bins x 1,250 ops/sec ±0.98% (87 runs sampled)
+ShelfPack batch allocate random height and width bins x 1,134 ops/sec ±1.20% (87 runs sampled)
+BinPack batch allocate fixed size bins x 2.21 ops/sec ±6.60% (10 runs sampled)
+BinPack batch allocate random width bins x 0.50 ops/sec ±2.25% (6 runs sampled)
+BinPack batch allocate random height bins x 0.51 ops/sec ±1.97% (6 runs sampled)
+BinPack batch allocate random height and width bins x 0.51 ops/sec ±1.37% (6 runs sampled)
 ```
 
 
 ### Usage
 
-#### Basic
+#### Basic Usage
 
 ```js
 var ShelfPack = require('shelf-pack');
@@ -53,15 +57,22 @@ var sprite = new ShelfPack(64, 64);
 
 // Pack bins one at a time..
 for (var i = 0; i < 5; i++) {
-    var bin = sprite.packOne(32, 32);   // request width, height
-    // returns an bin object with `x`, `y`, `w`, `h`, `width`, `height` properties..
+    // packOne() accepts parameters: `width`, `height`, `id`
+    // and returns a single allocated Bin object..
+    // `id` is optional - if you skip it, shelf-pack will make up a number for you..
+    // (Protip: numeric ids are much faster than string ids)
 
-    if (bin) {
-        console.log('bin packed at ' + bin.x + ', ' + bin.y);
-    } else {
-        console.log('out of space');
-    }
+    var bin = sprite.packOne(32, 32);
+    console.log(bin || 'out of space');
 }
+
+/* output:
+Bin { id: 1, x: 0, y: 0, w: 32, h: 32, refcount: 1 }
+Bin { id: 2, x: 32, y: 0, w: 32, h: 32, refcount: 1 }
+Bin { id: 3, x: 0, y: 32, w: 32, h: 32, refcount: 1 }
+Bin { id: 4, x: 32, y: 32, w: 32, h: 32, refcount: 1 }
+out of space
+*/
 
 // Clear sprite and start over..
 sprite.clear();
@@ -82,38 +93,110 @@ var ShelfPack = require('shelf-pack');
 var sprite = new ShelfPack(10, 10, { autoResize: true });
 
 // Bins can be allocated in batches..
-// Each bin should have `width`, `height` (or `w`, `h`) properties..
-var bins = [
+// Each requested bin should have `w`, `h` (or `width`, `height`) properties..
+var requests = [
     { id: 'a', width: 10, height: 10 },
     { id: 'b', width: 10, height: 12 },
     { id: 'c', w: 10, h: 12 },
     { id: 'd', w: 10, h: 10 }
 ];
 
-var results = sprite.pack(bins);
-// returns an Array of packed bins objects with `x`, `y`, `w`, `h`, `width`, `height` properties..
+// pack() returns an Array of packed Bin objects..
+var results = sprite.pack(requests);
 
 results.forEach(function(bin) {
-    console.log('bin packed at ' + bin.x + ', ' + bin.y);
+    console.log(bin);
 });
 
+/* output:
+Bin { id: 'a', x: 0, y: 0, w: 10, h: 10, refcount: 1 }
+Bin { id: 'b', x: 0, y: 10, w: 10, h: 12, refcount: 1 }
+Bin { id: 'c', x: 10, y: 10, w: 10, h: 12, refcount: 1 }
+Bin { id: 'd', x: 10, y: 0, w: 10, h: 10, refcount: 1 }
+*/
 
 // If you don't mind letting ShelfPack modify your objects,
 // the `inPlace` option will decorate your bin objects with `x` and `y` properties.
 // Fancy!
-var moreBins = [
+var myBins = [
     { id: 'e', width: 12, height: 24 },
     { id: 'f', width: 12, height: 12 },
     { id: 'g', w: 10, h: 10 }
 ];
 
-sprite.pack(moreBins, { inPlace: true });
-moreBins.forEach(function(bin) {
-    console.log('bin packed at ' + bin.x + ', ' + bin.y);
+sprite.pack(myBins, { inPlace: true });
+myBins.forEach(function(bin) {
+    console.log(bin);
 });
 
+/* output:
+{ id: 'e', width: 12, height: 24, x: 0, y: 22 }
+{ id: 'f', width: 12, height: 12, x: 20, y: 10 }
+{ id: 'g', w: 10, h: 10, x: 20, y: 0 }
+*/
 
 ```
+
+#### Reference Counting
+
+```js
+var ShelfPack = require('shelf-pack');
+
+// Initialize the sprite with a width and height..
+var sprite = new ShelfPack(64, 64);
+
+// Allocated bins are automatically reference counted.
+// They start out having a refcount of 1.
+[100, 101, 102].forEach(function(id) {
+    var bin = sprite.packOne(16, 16, id);
+    console.log(bin);
+});
+
+/* output:
+Bin { id: 100, x: 0, y: 0, w: 16, h: 16, refcount: 1 }
+Bin { id: 101, x: 16, y: 0, w: 16, h: 16, refcount: 1 }
+Bin { id: 102, x: 32, y: 0, w: 16, h: 16, refcount: 1 }
+*/
+
+// If you try to pack the same id again, shelf-pack will not re-pack it.
+// Instead, it will increment the reference count automatically..
+var bin102 = sprite.packOne(16, 16, 102);
+console.log(bin102);
+
+/* output:
+Bin { id: 102, x: 32, y: 0, w: 16, h: 16, refcount: 2 }
+*/
+
+// You can also manually increment the reference count..
+var bin101 = sprite.getBin(101);
+sprite.ref(bin101);
+console.log(bin101);
+
+/* output:
+Bin { id: 101, x: 16, y: 0, w: 16, h: 16, refcount: 2 }
+*/
+
+// ...and decrement it!
+var bin100 = sprite.getBin(100);
+sprite.unref(bin100);
+console.log(bin100);
+
+/* output:
+Bin { id: 100, x: 0, y: 0, w: 16, h: 16, refcount: 0 }
+*/
+
+// Bins with a refcount of 0 are considered free space.
+// Next time a bin is packed, shelf-back tries to reuse free space first.
+// See how Bin 103 gets allocated at [0,0] - Bin 100's old spot!
+var bin103 = sprite.packOne(16, 16, 103);
+console.log(bin103);
+
+/* output:
+Bin { id: 103, x: 0, y: 0, w: 16, h: 16, refcount: 1 }
+*/
+
+```
+
 
 ### Documentation
 
