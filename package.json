@@ -18,6 +18,7 @@
   "devDependencies": {
     "benchmark": "~2.1.0",
     "bin-pack": "1.0.2",
+    "coveralls": "^2.11.12",
     "documentation": "4.0.0-beta5",
     "eslint": "~3.2.2",
     "rollup": "0.34.7",
