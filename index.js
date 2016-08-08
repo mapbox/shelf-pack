@@ -24,7 +24,7 @@ function ShelfPack(w, h, options) {
     this.freebins = [];
     this.stats = {};
     this.bins = {};
-    this.nextId = 1;
+    this.maxId = 0;
 }
 
 
@@ -123,10 +123,12 @@ ShelfPack.prototype.packOne = function(w, h, id) {
             this.ref(bin);
             return bin;
         }
+        if (typeof id === 'number') {
+            this.maxId = Math.max(id, this.maxId);
+        }
     } else {
-        id = this.nextId++;
+        id = ++this.maxId;
     }
-
 
     // First try to reuse a free bin..
     for (i = 0; i < this.freebins.length; i++) {
@@ -331,7 +333,7 @@ ShelfPack.prototype.clear = function() {
     this.freebins = [];
     this.stats = {};
     this.bins = {};
-    this.nextId = 1;
+    this.maxId = 0;
 };
 
 

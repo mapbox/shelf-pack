@@ -179,6 +179,15 @@ test('ShelfPack', function(t) {
             t.end();
         });
 
+        t.test('packOne() does not generate an id that collides with an existing id', function(t) {
+            var sprite = new ShelfPack(64, 64);
+            var bin1 = sprite.packOne(10, 10, 1);
+            var bin2 = sprite.packOne(10, 10);
+            t.deepEqual(bin1.id, 1, 'packed bin 1');
+            t.deepEqual(bin2.id, 2, 'packed bin 2');
+            t.end();
+        });
+
         t.test('packOne() does not reallocate a bin with existing id', function(t) {
             var sprite = new ShelfPack(64, 64);
             var bin1 = sprite.packOne(10, 10, 1000);
