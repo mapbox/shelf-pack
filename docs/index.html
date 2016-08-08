@@ -50,6 +50,24 @@
                       </a></li>
                       
                       <li><a
+                        href='#ShelfPack#getBin'
+                        class='regular pre-open'>
+                        #getBin
+                      </a></li>
+                      
+                      <li><a
+                        href='#ShelfPack#ref'
+                        class='regular pre-open'>
+                        #ref
+                      </a></li>
+                      
+                      <li><a
+                        href='#ShelfPack#unref'
+                        class='regular pre-open'>
+                        #unref
+                      </a></li>
+                      
+                      <li><a
                         href='#ShelfPack#clear'
                         class='regular pre-open'>
                         #clear
@@ -65,6 +83,16 @@
                   
                   
                 </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#Bin'
+                  class="">
+                  Bin
+                  
+                </a>
                 
                 </li>
               
@@ -87,7 +115,7 @@
       ShelfPack
     </h2>
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/de6144ab39f42c1e2a1e21e75f93b5f610fe49e9/index.js#L18-L28'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/1fe7046b2a039becd594ec5ce7bada6d1a9f145b/index.js#L18-L28'>
       <span>index.js</span>
       </a>
     
@@ -206,7 +234,7 @@
   <p>Batch pack multiple bins into the sprite.</p>
 
 
-  <div class='pre p1 fill-light'>pack(bins: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, options: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>]): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light'>pack(bins: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;, options: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>]): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="#Bin">Bin</a>&gt;</div>
 
   
 
@@ -222,7 +250,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>bins</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code> Array of requested bins - each object should have 
+            <span class='code bold'>bins</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;)</code> Array of requested bins - each object should have 
 <code>width</code>
 , 
 <code>height</code>
@@ -233,6 +261,36 @@
 ) properties
 
           </div>
+          
+          <table class='mt1 mb2 fixed-table h5'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <td>Name</td>
+                <td>Description</td>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>bins[].w</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+                  </td>
+                  <td class='break-word'><span>Requested bin width
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>bins[].h</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+                  </td>
+                  <td class='break-word'><span>Requested bin height
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
           
         </div>
       
@@ -282,8 +340,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        Array of allocated bins - each bin is an object with 
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="#Bin">Bin</a>&gt;</code>:
+        Array of allocated Bins - each Bin is an object with 
+<code>id</code>
+, 
 <code>x</code>
 , 
 <code>y</code>
@@ -304,9 +364,9 @@
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> bins = [
-    { id: <span class="hljs-string">'a'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">12</span> },
-    { id: <span class="hljs-string">'b'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">16</span> },
-    { id: <span class="hljs-string">'c'</span>, width: <span class="hljs-number">12</span>, height: <span class="hljs-number">24</span> }
+    { id: <span class="hljs-number">1</span>, w: <span class="hljs-number">12</span>, h: <span class="hljs-number">12</span> },
+    { id: <span class="hljs-number">2</span>, w: <span class="hljs-number">12</span>, h: <span class="hljs-number">16</span> },
+    { id: <span class="hljs-number">3</span>, w: <span class="hljs-number">12</span>, h: <span class="hljs-number">24</span> }
 ];
 <span class="hljs-keyword">var</span> results = sprite.pack(bins, { inPlace: <span class="hljs-literal">false</span> });</pre>
     
@@ -327,7 +387,7 @@
         <div class="pad1y contain">
             <a class='icon pin-right pad1y dark-link caret-right'></a>
             <span class='code strong strong truncate'>packOne</span>
-            <span class='quiet code space-right2'>(w, h)</span>
+            <span class='quiet code space-right2'>(w, h, [id])</span>
         </div>
       </div>
       <div class="clearfix hidden toggle-target">
@@ -336,9 +396,16 @@
   
 
   <p>Pack a single bin into the sprite.</p>
+<p>Each bin will have a unique identitifer.
+If no identifier is supplied in the <code>id</code> parameter, one will be created.
+Note: The supplied <code>id</code> is used as an object index, so numeric values are fastest!</p>
+<p>Bins are automatically refcounted (i.e. a newly packed Bin will have a refcount of 1).
+When a bin is no longer needed, use the <code>ShelfPack.unref</code> function to mark it
+as unused.  When a Bin&#x27;s refcount decrements to 0, the Bin will be marked
+as free and its space may be reused by the packing code.</p>
 
 
-  <div class='pre p1 fill-light'>packOne(w: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, h: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light'>packOne(w: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, h: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, id: [(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)]): <a href="#Bin">Bin</a></div>
 
   
 
@@ -368,6 +435,14 @@
           
         </div>
       
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>id</span> <code class='quiet'>([(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)])</code> Unique identifier for this bin, (if unsupplied, assume it&#x27;s a new bin and create an id)
+
+          </div>
+          
+        </div>
+      
     </div>
   
 
@@ -376,8 +451,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Allocated bin object with 
+      <code><a href="#Bin">Bin</a></code>:
+        Bin object with 
+<code>id</code>
+, 
 <code>x</code>
 , 
 <code>y</code>
@@ -399,7 +476,229 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> results = sprite.packOne(<span class="hljs-number">12</span>, <span class="hljs-number">16</span>);</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> results = sprite.packOne(<span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-string">'a'</span>);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='ShelfPack#getBin'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>getBin</span>
+            <span class='quiet code space-right2'>(id)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Return a packed bin given its id, or undefined if the id is not found</p>
+
+
+  <div class='pre p1 fill-light'>getBin(id: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)): <a href="#Bin">Bin</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>id</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code> Unique identifier for this bin,
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#Bin">Bin</a></code>:
+        The requested bin, or undefined if not yet packed
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> b = sprite.getBin(<span class="hljs-string">'a'</span>);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='ShelfPack#ref'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>ref</span>
+            <span class='quiet code space-right2'>(bin)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Increment the ref count of a bin and update statistics.</p>
+
+
+  <div class='pre p1 fill-light'>ref(bin: Bin): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>bin</span> <code class='quiet'>(<a href="#Bin">Bin</a>)</code> Bin instance
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        New refcount of the bin
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> bin = sprite.getBin(<span class="hljs-string">'a'</span>);
+sprite.ref(bin);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='ShelfPack#unref'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>unref</span>
+            <span class='quiet code space-right2'>(bin)</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Decrement the ref count of a bin and update statistics.
+The bin will be automatically marked as free space once the refcount reaches 0.</p>
+
+
+  <div class='pre p1 fill-light'>unref(bin: Bin): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>bin</span> <code class='quiet'>(<a href="#Bin">Bin</a>)</code> Bin instance
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        New refcount of the bin
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> bin = sprite.getBin(<span class="hljs-string">'a'</span>);
+sprite.unref(bin);</pre>
     
   
 
@@ -426,7 +725,7 @@
 
   
 
-  <p>Clear the sprite.</p>
+  <p>Clear the sprite.  Resets everything and resets statistics.</p>
 
 
   <div class='pre p1 fill-light'>clear()</div>
@@ -550,6 +849,105 @@
     </div>
   
 </div>
+
+  
+
+  
+</section>
+
+            
+          
+            
+              <section class='py2 clearfix'>
+
+  
+  <div class='clearfix'>
+    <h2 class='fl' id='Bin'>
+      Bin
+    </h2>
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/1fe7046b2a039becd594ec5ce7bada6d1a9f145b/index.js#L428-L435'>
+      <span>index.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Create a new Bin object.</p>
+
+
+  <div class='pre p1 fill-light'>Bin(id: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>), x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, w: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, h: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>id</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code> Unique id of the bin
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> Left coordinate of the bin
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> Top coordinate of the bin
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>w</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> Width of the bin
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>h</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> Height of the bin
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> bin = <span class="hljs-keyword">new</span> Bin(<span class="hljs-string">'a'</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>);</pre>
+    
+  
+
+  
 
   
 
