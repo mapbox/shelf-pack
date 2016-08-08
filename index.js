@@ -112,8 +112,9 @@ ShelfPack.prototype.pack = function(bins, options) {
  * var results = sprite.packOne(12, 16, 'a');
  */
 ShelfPack.prototype.packOne = function(w, h, id) {
-    var y = 0,
-        best, bin, shelf, waste, i;
+    var best = { freebin: -1, shelf: -1, waste: Infinity },
+        y = 0,
+        bin, shelf, waste, i;
 
     // if id was supplied, attempt a lookup..
     if (typeof id === 'string' || typeof id === 'number') {
@@ -127,15 +128,13 @@ ShelfPack.prototype.packOne = function(w, h, id) {
     }
 
 
-    // first try to reuse a free bin..
-    best = { index: -1, waste: Infinity };
+    // First try to reuse a free bin..
     for (i = 0; i < this.freebins.length; i++) {
         bin = this.freebins[i];
 
         // exactly the right height and width, use it..
         if (h === bin.h && w === bin.w) {
-            best.index = i;
-            break;
+            return this.allocFreebin(i, w, h, id);
         }
         // not enough height or width, skip it..
         if (h > bin.h || w > bin.w) {
@@ -143,71 +142,54 @@ ShelfPack.prototype.packOne = function(w, h, id) {
         }
         // extra height or width, minimize wasted area..
         if (h <= bin.h && w <= bin.w) {
-            waste = (bin.h - h) * (bin.w - w);
+            waste = (bin.w * bin.h) - (w * h);
             if (waste < best.waste) {
                 best.waste = waste;
-                best.index = i;
+                best.freebin = i;
             }
         }
     }
 
-    if (best.index !== -1) {
-        bin = this.freebins.splice(best.index, 1)[0];
-        bin.id = id;
-        bin.w = w;
-        bin.h = h;
-        bin.refcount = 0;
-        this.bins[id] = bin;
-        this.ref(bin);
-        return bin;
-    }
-
-
-    // No free bins, find the best shelf..
-    best = { index: -1, waste: Infinity };
+    // Next find the best shelf..
     for (i = 0; i < this.shelves.length; i++) {
         shelf = this.shelves[i];
         y += shelf.h;
 
-        // not enought width on this shelf, skip it..
+        // not enough width on this shelf, skip it..
         if (w > shelf.free) {
             continue;
         }
         // exactly the right height, pack it..
         if (h === shelf.h) {
-            best.index = i;
-            break;
+            return this.allocShelf(i, w, h, id);
         }
         // not enough height, skip it..
         if (h > shelf.h) {
             continue;
         }
-        // extra height, minimize wasted height..
+        // extra height, minimize wasted area..
         if (h < shelf.h) {
-            waste = shelf.h - h;
+            waste = (shelf.h - h) * w;
             if (waste < best.waste) {
+                best.freebin = -1;
                 best.waste = waste;
-                best.index = i;
+                best.shelf = i;
             }
         }
     }
 
-    if (best.index !== -1) {
-        shelf = this.shelves[best.index];
-        bin = shelf.alloc(w, h, id);
-        this.bins[id] = bin;
-        this.ref(bin);
-        return bin;
+    if (best.freebin !== -1) {
+        return this.allocFreebin(best.freebin, w, h, id);
     }
 
-    // No free shelves.. add shelf..
+    if (best.shelf !== -1) {
+        return this.allocShelf(best.shelf, w, h, id);
+    }
+
+    // No free bins or shelves.. add shelf..
     if (h <= (this.h - y) && w <= this.w) {
         shelf = new Shelf(y, this.w, h);
-        this.shelves.push(shelf);
-        bin = shelf.alloc(w, h, id);
-        this.bins[id] = bin;
-        this.ref(bin);
-        return bin;
+        return this.allocShelf(this.shelves.push(shelf) - 1, w, h, id);
     }
 
     // No room for more shelves..
@@ -233,6 +215,51 @@ ShelfPack.prototype.packOne = function(w, h, id) {
     }
 
     return null;
+};
+
+
+/**
+ * Called by packOne() to allocate a bin by reusing an existing freebin
+ *
+ * @private
+ * @param    {number}         index  Index into the `this.freebins` array
+ * @param    {number}         w      Width of the bin to allocate
+ * @param    {number}         h      Height of the bin to allocate
+ * @param    {number|string}  id     Unique identifier for this bin
+ * @returns  {Bin}            Bin object with `id`, `x`, `y`, `w`, `h` properties
+ * @example
+ * var bin = sprite.allocFreebin(0, 12, 16, 'a');
+ */
+ShelfPack.prototype.allocFreebin = function (index, w, h, id) {
+    var bin = this.freebins.splice(index, 1)[0];
+    bin.id = id;
+    bin.w = w;
+    bin.h = h;
+    bin.refcount = 0;
+    this.bins[id] = bin;
+    this.ref(bin);
+    return bin;
+};
+
+
+/**
+ * Called by `packOne() to allocate bin on an existing shelf
+ *
+ * @private
+ * @param    {number}         index  Index into the `this.shelves` array
+ * @param    {number}         w      Width of the bin to allocate
+ * @param    {number}         h      Height of the bin to allocate
+ * @param    {number|string}  id     Unique identifier for this bin
+ * @returns  {Bin}            Bin object with `id`, `x`, `y`, `w`, `h` properties
+ * @example
+ * var results = sprite.allocShelf(0, 12, 16, 'a');
+ */
+ShelfPack.prototype.allocShelf = function(index, w, h, id) {
+    var shelf = this.shelves[index];
+    var bin = shelf.alloc(w, h, id);
+    this.bins[id] = bin;
+    this.ref(bin);
+    return bin;
 };
 
 

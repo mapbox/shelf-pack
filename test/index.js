@@ -226,35 +226,46 @@ test('ShelfPack', function(t) {
 
         t.test('packOne() allocates in free bin if possible', function(t) {
             var sprite = new ShelfPack(64, 64);
-            sprite.packOne(10, 10);
-            sprite.packOne(10, 10);
-            sprite.packOne(10, 10);
+            sprite.packOne(10, 10, 1);
+            sprite.packOne(10, 10, 2);
+            sprite.packOne(10, 10, 3);
 
             var bin2 = sprite.getBin(2);
             sprite.unref(bin2);
             t.deepEqual(sprite.freebins.length, 1, 'freebins length 1');
             t.deepEqual(sprite.freebins[0], bin2, 'bin2 moved to freebins');
 
-            t.deepEqual(sprite.packOne(10, 10), { id: 4, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'reused bin2 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10, 4), { id: 4, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'reused bin2 10x10 bin');
             t.deepEqual(sprite.freebins.length, 0, 'freebins length 0');
-
             t.end();
         });
 
-        t.test('packOne() allocates in free bin, minimizing waste', function(t) {
+        t.test('packOne() allocates new bin in least wasteful free bin', function(t) {
             var sprite = new ShelfPack(64, 64);
-            sprite.packOne(10, 10);
-            sprite.packOne(10, 15);
-            sprite.packOne(10, 20);
+            sprite.packOne(10, 10, 1);
+            sprite.packOne(10, 15, 2);
+            sprite.packOne(10, 20, 3);
 
             sprite.unref(sprite.getBin(1));
             sprite.unref(sprite.getBin(2));
             sprite.unref(sprite.getBin(3));
 
             t.deepEqual(sprite.freebins.length, 3, 'freebins length 3');
-            t.deepEqual(sprite.packOne(10, 13), { id: 4, x: 0,  y: 10, w: 10, h: 13, refcount: 1 }, 'reused bin2 10x15 bin');
+            t.deepEqual(sprite.packOne(10, 13, 4), { id: 4, x: 0,  y: 10, w: 10, h: 13, refcount: 1 }, 'reused bin2 10x15 bin');
             t.deepEqual(sprite.freebins.length, 2, 'freebins length 2');
+            t.end();
+        });
 
+        t.test('packOne() avoids free bin if all are more wasteful than packing on a shelf', function(t) {
+            var sprite = new ShelfPack(64, 64);
+            sprite.packOne(10, 10, 1);
+            sprite.packOne(10, 15, 2);
+
+            sprite.unref(sprite.getBin(2));
+
+            t.deepEqual(sprite.freebins.length, 1, 'freebins length 1');
+            t.deepEqual(sprite.packOne(10, 10, 3), { id: 3, x: 10,  y: 0, w: 10, h: 10, refcount: 1 }, 'bin4 packs on shelf instead of freebin');
+            t.deepEqual(sprite.freebins.length, 1, 'freebins still length 1');
             t.end();
         });
 
