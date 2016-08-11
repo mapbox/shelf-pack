@@ -1,9 +1,13 @@
 :warning: = Breaking change
 
+## 2.0.1
+##### 2016-Aug-11
+* Remember original size of free bins and use that for packing free space (#29)
+
 ## 2.0.0
 ##### 2016-Aug-08
-* Avoid id collisions by updating `maxId` if a numeric `id` is supplied (closes #28)
-* Skip free bins if they are more wasteful than free shelves (closes #25)
+* Avoid id collisions by updating `maxId` if a numeric `id` is supplied (#28)
+* Skip free bins if they are more wasteful than free shelves (#25)
 * Prefer numeric Bin ids over strings (3x perf boost)
 * :warning: Remove convenience `width`, `height` properties from Bin object, use only `w`, `h`
 * Reference counting (see #20 or README)
@@ -21,9 +25,9 @@
 ## 1.0.0
 ##### 2016-Mar-29
 * :warning: Rename `allocate()` -> `packOne()` for API consistency
-* Add `autoResize` option (closes #7)
+* Add `autoResize` option (#7)
 * Add `clear()` method
-* Generate API docs (closes #9)
+* Generate API docs (#9)
 * Add `pack()` batch allocator
-* Add benchmarks (closes #2)
-* :warning: Return `null` instead of `{-1,-1}` on failed allocation (closes #1)
+* Add benchmarks (#2)
+* :warning: Return `null` instead of `{-1,-1}` on failed allocation (#1)

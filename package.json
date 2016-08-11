@@ -1,7 +1,7 @@
 {
   "name": "shelf-pack",
   "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.umd.js",
   "jsnext:main": "index.js",
   "license": "ISC",
