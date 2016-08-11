@@ -135,16 +135,16 @@ ShelfPack.prototype.packOne = function(w, h, id) {
         bin = this.freebins[i];
 
         // exactly the right height and width, use it..
-        if (h === bin.h && w === bin.w) {
+        if (h === bin.maxh && w === bin.maxw) {
             return this.allocFreebin(i, w, h, id);
         }
         // not enough height or width, skip it..
-        if (h > bin.h || w > bin.w) {
+        if (h > bin.maxh || w > bin.maxw) {
             continue;
         }
         // extra height or width, minimize wasted area..
-        if (h <= bin.h && w <= bin.w) {
-            waste = (bin.w * bin.h) - (w * h);
+        if (h <= bin.maxh && w <= bin.maxw) {
+            waste = (bin.maxw * bin.maxh) - (w * h);
             if (waste < best.waste) {
                 best.waste = waste;
                 best.freebin = i;
@@ -431,6 +431,8 @@ function Bin(id, x, y, w, h) {
     this.y  = y;
     this.w  = w;
     this.h  = h;
+    this.maxw = w;
+    this.maxh = h;
     this.refcount = 0;
 }
 

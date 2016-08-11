@@ -68,10 +68,10 @@ for (var i = 0; i < 5; i++) {
 }
 
 /* output:
-Bin { id: 1, x: 0, y: 0, w: 32, h: 32, refcount: 1 }
-Bin { id: 2, x: 32, y: 0, w: 32, h: 32, refcount: 1 }
-Bin { id: 3, x: 0, y: 32, w: 32, h: 32, refcount: 1 }
-Bin { id: 4, x: 32, y: 32, w: 32, h: 32, refcount: 1 }
+Bin { id: 1, x: 0, y: 0, w: 32, h: 32, maxw: 32, maxh: 32, refcount: 1 }
+Bin { id: 2, x: 32, y: 0, w: 32, h: 32, maxw: 32, maxh: 32, refcount: 1 }
+Bin { id: 3, x: 0, y: 32, w: 32, h: 32, maxw: 32, maxh: 32, refcount: 1 }
+Bin { id: 4, x: 32, y: 32, w: 32, h: 32, maxw: 32, maxh: 32, refcount: 1 }
 out of space
 */
 
@@ -110,10 +110,10 @@ results.forEach(function(bin) {
 });
 
 /* output:
-Bin { id: 'a', x: 0, y: 0, w: 10, h: 10, refcount: 1 }
-Bin { id: 'b', x: 0, y: 10, w: 10, h: 12, refcount: 1 }
-Bin { id: 'c', x: 10, y: 10, w: 10, h: 12, refcount: 1 }
-Bin { id: 'd', x: 10, y: 0, w: 10, h: 10, refcount: 1 }
+Bin { id: 'a', x: 0, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
+Bin { id: 'b', x: 0, y: 10, w: 10, h: 12, maxw: 10, maxh: 12, refcount: 1 }
+Bin { id: 'c', x: 10, y: 10, w: 10, h: 12, maxw: 10, maxh: 12, refcount: 1 }
+Bin { id: 'd', x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
 */
 
 // If you don't mind letting ShelfPack modify your objects,
@@ -154,9 +154,9 @@ var sprite = new ShelfPack(64, 64);
 });
 
 /* output:
-Bin { id: 100, x: 0, y: 0, w: 16, h: 16, refcount: 1 }
-Bin { id: 101, x: 16, y: 0, w: 16, h: 16, refcount: 1 }
-Bin { id: 102, x: 32, y: 0, w: 16, h: 16, refcount: 1 }
+Bin { id: 100, x: 0, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 1 }
+Bin { id: 101, x: 16, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 1 }
+Bin { id: 102, x: 32, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 1 }
 */
 
 // If you try to pack the same id again, shelf-pack will not re-pack it.
@@ -165,7 +165,7 @@ var bin102 = sprite.packOne(16, 16, 102);
 console.log(bin102);
 
 /* output:
-Bin { id: 102, x: 32, y: 0, w: 16, h: 16, refcount: 2 }
+Bin { id: 102, x: 32, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 2 }
 */
 
 // You can also manually increment the reference count..
@@ -174,7 +174,7 @@ sprite.ref(bin101);
 console.log(bin101);
 
 /* output:
-Bin { id: 101, x: 16, y: 0, w: 16, h: 16, refcount: 2 }
+Bin { id: 101, x: 16, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 2 }
 */
 
 // ...and decrement it!
@@ -183,17 +183,27 @@ sprite.unref(bin100);
 console.log(bin100);
 
 /* output:
-Bin { id: 100, x: 0, y: 0, w: 16, h: 16, refcount: 0 }
+Bin { id: 100, x: 0, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 0 }
 */
 
 // Bins with a refcount of 0 are considered free space.
 // Next time a bin is packed, shelf-back tries to reuse free space first.
 // See how Bin 103 gets allocated at [0,0] - Bin 100's old spot!
-var bin103 = sprite.packOne(16, 16, 103);
+var bin103 = sprite.packOne(16, 15, 103);
 console.log(bin103);
 
 /* output:
-Bin { id: 103, x: 0, y: 0, w: 16, h: 16, refcount: 1 }
+Bin { id: 103, x: 0, y: 0, w: 16, h: 15, maxw: 16, maxh: 16, refcount: 1 }
+*/
+
+// Bin 103 may be smaller (16x15) but it knows 16x16 was its original size.
+// If that space becomes free again, a 16x16 bin will still fit there.
+sprite.unref(bin103)
+var bin104 = sprite.packOne(16, 16, 104);
+console.log(bin104);
+
+/* output:
+Bin { id: 104, x: 0, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 1 }
 */
 
 ```

@@ -14,9 +14,9 @@ test('ShelfPack', function(t) {
                     { id: 'c', width: 10, height: 10 }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 10, y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'c', x: 20, y: 0, w: 10, h: 10, refcount: 1 }
+                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'c', x: 20, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
                 ];
 
             var results = sprite.pack(bins);
@@ -32,9 +32,9 @@ test('ShelfPack', function(t) {
                     { id: 'c', width: 10, height: 20 }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0, y: 0,  w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 0, y: 10, w: 10, h: 15, refcount: 1 },
-                    { id: 'c', x: 0, y: 25, w: 10, h: 20, refcount: 1 }
+                    { id: 'a', x: 0, y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 0, y: 10, w: 10, h: 15, maxw: 10, maxh: 15, refcount: 1 },
+                    { id: 'c', x: 0, y: 25, w: 10, h: 20, maxw: 10, maxh: 20, refcount: 1 }
                 ];
 
             var results = sprite.pack(bins);
@@ -51,10 +51,10 @@ test('ShelfPack', function(t) {
                     { id: 'd', width: 10, height: 9  }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0,  y: 0,  w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 0,  y: 10, w: 10, h: 15, refcount: 1 },
-                    { id: 'c', x: 0,  y: 25, w: 10, h: 20, refcount: 1 },
-                    { id: 'd', x: 10, y: 0,  w: 10, h: 9,  refcount: 1 }
+                    { id: 'a', x: 0,  y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 0,  y: 10, w: 10, h: 15, maxw: 10, maxh: 15, refcount: 1 },
+                    { id: 'c', x: 0,  y: 25, w: 10, h: 20, maxw: 10, maxh: 20, refcount: 1 },
+                    { id: 'd', x: 10, y: 0,  w: 10, h: 9,  maxw: 10, maxh: 9,  refcount: 1 }
                 ];
 
             var results = sprite.pack(bins);
@@ -70,9 +70,9 @@ test('ShelfPack', function(t) {
                     { id: 'c', w: 10, h: 10 }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 10, y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'c', x: 20, y: 0, w: 10, h: 10, refcount: 1 }
+                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'c', x: 20, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
                 ];
 
             var results = sprite.pack(bins);
@@ -88,9 +88,9 @@ test('ShelfPack', function(t) {
                     { id: 'c', w: 10, h: 10 }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 10, y: 0, w: 10, h: 10, refcount: 1 },
-                    { id: 'c', x: 20, y: 0, w: 10, h: 10, refcount: 1 }
+                    { id: 'a', x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'c', x: 20, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
                 ],
                 expectedBins = [
                     { id: 'a', w: 10, h: 10, x: 0,  y: 0 },
@@ -113,9 +113,9 @@ test('ShelfPack', function(t) {
                     { id: 'd', w: 10, h: 10 }
                 ],
                 expectedResults = [
-                    { id: 'a', x: 0,  y: 0,  w: 10, h: 10, refcount: 1 },
-                    { id: 'b', x: 10, y: 0,  w: 10, h: 10, refcount: 1 },
-                    { id: 'd', x: 0,  y: 10, w: 10, h: 10, refcount: 1 }
+                    { id: 'a', x: 0,  y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'b', x: 10, y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 },
+                    { id: 'd', x: 0,  y: 10, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }
                 ],
                 expectedBins = [
                     { id: 'a', w: 10, h: 10, x: 0,  y: 0 },
@@ -157,7 +157,7 @@ test('ShelfPack', function(t) {
         t.test('packOne() allocates bins with numeric id', function(t) {
             var sprite = new ShelfPack(64, 64);
             var bin = sprite.packOne(10, 10, 1000);
-            t.deepEqual(bin, { id: 1000, x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'packed bin 1000');
+            t.deepEqual(bin, { id: 1000, x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'packed bin 1000');
             t.deepEqual(bin, sprite.getBin(1000), 'got bin 1000');
             t.end();
         });
@@ -165,7 +165,7 @@ test('ShelfPack', function(t) {
         t.test('packOne() allocates bins with string id', function(t) {
             var sprite = new ShelfPack(64, 64);
             var bin = sprite.packOne(10, 10, 'foo');
-            t.deepEqual(bin, { id: 'foo', x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'packed bin "foo"');
+            t.deepEqual(bin, { id: 'foo', x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'packed bin "foo"');
             t.deepEqual(bin, sprite.getBin('foo'), 'got bin "foo"');
             t.end();
         });
@@ -191,43 +191,43 @@ test('ShelfPack', function(t) {
         t.test('packOne() does not reallocate a bin with existing id', function(t) {
             var sprite = new ShelfPack(64, 64);
             var bin1 = sprite.packOne(10, 10, 1000);
-            t.deepEqual(bin1, { id: 1000, x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'bin 1000 refcount 1');
+            t.deepEqual(bin1, { id: 1000, x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'bin 1000 refcount 1');
             t.deepEqual(bin1, sprite.getBin(1000), 'got bin 1000');
 
             var bin2 = sprite.packOne(10, 10, 1000);
-            t.deepEqual(bin2, { id: 1000, x: 0,  y: 0, w: 10, h: 10, refcount: 2 }, 'bin 1000 refcount 2');
+            t.deepEqual(bin2, { id: 1000, x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 2 }, 'bin 1000 refcount 2');
             t.deepEqual(bin1, bin2, 'bin1 and bin2 are the same bin');
             t.end();
         });
 
         t.test('packOne() allocates same height bins on existing shelf', function(t) {
             var sprite = new ShelfPack(64, 64);
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
-            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
-            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 20, y: 0, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'second 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 20, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'third 10x10 bin');
             t.end();
         });
 
         t.test('packOne() allocates larger bins on new shelf', function(t) {
             var sprite = new ShelfPack(64, 64);
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
-            t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0, y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
-            t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0, y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0, y: 10, w: 10, h: 15, maxw: 10, maxh: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
+            t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0, y: 25, w: 10, h: 20, maxw: 10, maxh: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
             t.end();
         });
 
         t.test('packOne() allocates shorter bins on existing shelf, minimizing waste', function(t) {
             var sprite = new ShelfPack(64, 64);
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
-            t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0,  y: 10, w: 10, h: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
-            t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0,  y: 25, w: 10, h: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
-            t.deepEqual(sprite.packOne(10, 9),  { id: 4, x: 10, y: 0,  w: 10, h: 9,  refcount: 1 }, 'shelf 1, 10x9 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'shelf 1, 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 15), { id: 2, x: 0,  y: 10, w: 10, h: 15, maxw: 10, maxh: 15, refcount: 1 }, 'shelf 2, 10x15 bin');
+            t.deepEqual(sprite.packOne(10, 20), { id: 3, x: 0,  y: 25, w: 10, h: 20, maxw: 10, maxh: 20, refcount: 1 }, 'shelf 3, 10x20 bin');
+            t.deepEqual(sprite.packOne(10, 9),  { id: 4, x: 10, y: 0,  w: 10, h: 9,  maxw: 10, maxh: 9,  refcount: 1 }, 'shelf 1, 10x9 bin');
             t.end();
         });
 
         t.test('packOne() returns nothing if not enough room', function(t) {
             var sprite = new ShelfPack(10, 10);
-            t.deepEqual(sprite.packOne(10, 10, 1), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10, 1), { id: 1, x: 0, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
             t.notOk(sprite.packOne(10, 10, 2), 'not enough room');
             t.notOk(sprite.shelves[0].alloc(10, 10, 2), 'not enough room on shelf');
             t.end();
@@ -244,7 +244,7 @@ test('ShelfPack', function(t) {
             t.deepEqual(sprite.freebins.length, 1, 'freebins length 1');
             t.deepEqual(sprite.freebins[0], bin2, 'bin2 moved to freebins');
 
-            t.deepEqual(sprite.packOne(10, 10, 4), { id: 4, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'reused bin2 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10, 4), { id: 4, x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'reused 10x10 free bin for bin4');
             t.deepEqual(sprite.freebins.length, 0, 'freebins length 0');
             t.end();
         });
@@ -260,7 +260,7 @@ test('ShelfPack', function(t) {
             sprite.unref(sprite.getBin(3));
 
             t.deepEqual(sprite.freebins.length, 3, 'freebins length 3');
-            t.deepEqual(sprite.packOne(10, 13, 4), { id: 4, x: 0,  y: 10, w: 10, h: 13, refcount: 1 }, 'reused bin2 10x15 bin');
+            t.deepEqual(sprite.packOne(10, 13, 4), { id: 4, x: 0,  y: 10, w: 10, h: 13, maxw: 10, maxh: 15, refcount: 1 }, 'reused free bin for 10x13 bin4');
             t.deepEqual(sprite.freebins.length, 2, 'freebins length 2');
             t.end();
         });
@@ -273,8 +273,26 @@ test('ShelfPack', function(t) {
             sprite.unref(sprite.getBin(2));
 
             t.deepEqual(sprite.freebins.length, 1, 'freebins length 1');
-            t.deepEqual(sprite.packOne(10, 10, 3), { id: 3, x: 10,  y: 0, w: 10, h: 10, refcount: 1 }, 'bin4 packs on shelf instead of freebin');
+            t.deepEqual(sprite.packOne(10, 10, 3), { id: 3, x: 10,  y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'bin3 packs on shelf instead of 10x15 free bin');
             t.deepEqual(sprite.freebins.length, 1, 'freebins still length 1');
+            t.end();
+        });
+
+        t.test('packOne() considers max bin dimensions when reusing a free bin', function(t) {
+            var sprite = new ShelfPack(64, 64);
+            sprite.packOne(10, 10, 1);
+            sprite.packOne(10, 15, 2);
+            sprite.unref(sprite.getBin(2));
+            t.deepEqual(sprite.freebins.length, 1, 'freebins length 1');
+
+            t.deepEqual(sprite.packOne(10, 13, 3), { id: 3, x: 0, y: 10, w: 10, h: 13, maxw: 10, maxh: 15, refcount: 1 }, 'reused free bin for 10x13 bin3');
+            t.deepEqual(sprite.freebins.length, 0, 'freebins length 0');
+            sprite.unref(sprite.getBin(3));
+            t.deepEqual(sprite.freebins.length, 1, 'freebins length back to 1');
+
+            t.deepEqual(sprite.packOne(10, 14, 4), { id: 4, x: 0, y: 10, w: 10, h: 14, maxw: 10, maxh: 15, refcount: 1 }, 'reused free bin for 10x14 bin4');
+            t.deepEqual(sprite.freebins.length, 0, 'freebins length back to 0');
+
             t.end();
         });
 
@@ -388,11 +406,11 @@ test('ShelfPack', function(t) {
     t.test('clear()', function(t) {
         t.test('clear() succeeds', function(t) {
             var sprite = new ShelfPack(10, 10);
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
             t.notOk(sprite.packOne(10, 10), 'not enough room');
 
             sprite.clear();
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
             t.end();
         });
 
@@ -403,34 +421,34 @@ test('ShelfPack', function(t) {
     t.test('resize()', function(t) {
         t.test('resize larger succeeds', function(t) {
             var sprite = new ShelfPack(10, 10);
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
             t.ok(sprite.resize(20, 10));
-            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'second 10x10 bin');
             t.ok(sprite.resize(20, 20));
-            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0, y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0, y: 10, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'third 10x10 bin');
             t.end();
         });
 
         t.test('autoResize grows sprite dimensions by width then height', function(t) {
             var sprite = new ShelfPack(10, 10, { autoResize: true });
-            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, refcount: 1 }, 'first 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 1, x: 0,  y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'first 10x10 bin');
             t.same([sprite.w, sprite.h], [10, 10]);
-            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0,  w: 10, h: 10, refcount: 1 }, 'second 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 2, x: 10, y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'second 10x10 bin');
             t.same([sprite.w, sprite.h], [20, 10]);
-            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0,  y: 10, w: 10, h: 10, refcount: 1 }, 'third 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 3, x: 0,  y: 10, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'third 10x10 bin');
             t.same([sprite.w, sprite.h], [20, 20]);
-            t.deepEqual(sprite.packOne(10, 10), { id: 4, x: 10, y: 10, w: 10, h: 10, refcount: 1 }, 'fourth 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 4, x: 10, y: 10, w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'fourth 10x10 bin');
             t.same([sprite.w, sprite.h], [20, 20]);
-            t.deepEqual(sprite.packOne(10, 10), { id: 5, x: 20, y: 0,  w: 10, h: 10, refcount: 1 }, 'fifth 10x10 bin');
+            t.deepEqual(sprite.packOne(10, 10), { id: 5, x: 20, y: 0,  w: 10, h: 10, maxw: 10, maxh: 10, refcount: 1 }, 'fifth 10x10 bin');
             t.same([sprite.w, sprite.h], [40, 20]);
             t.end();
         });
 
         t.test('autoResize accomodates big bin requests', function(t) {
             var sprite = new ShelfPack(10, 10, { autoResize: true });
-            t.deepEqual(sprite.packOne(20, 10), { id: 1, x: 0,  y: 0,  w: 20, h: 10, refcount: 1 }, '20x10 bin');
+            t.deepEqual(sprite.packOne(20, 10), { id: 1, x: 0,  y: 0,  w: 20, h: 10, maxw: 20, maxh: 10, refcount: 1 }, '20x10 bin');
             t.same([sprite.w, sprite.h], [40, 10]);
-            t.deepEqual(sprite.packOne(10, 40), { id: 2, x: 0,  y: 10, w: 10, h: 40, refcount: 1 }, '40x10 bin');
+            t.deepEqual(sprite.packOne(10, 40), { id: 2, x: 0,  y: 10, w: 10, h: 40, maxw: 10, maxh: 40, refcount: 1 }, '40x10 bin');
             t.same([sprite.w, sprite.h], [40, 80]);
             t.end();
         });
