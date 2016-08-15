@@ -393,7 +393,7 @@ Shelf.prototype.alloc = function(w, h, id) {
     var x = this.x;
     this.x += w;
     this.free -= w;
-    return new Bin(id, x, this.y, w, h);
+    return new Bin(id, x, this.y, w, h, w, this.h);
 };
 
 
@@ -417,22 +417,24 @@ Shelf.prototype.resize = function(w) {
  * Create a new Bin object.
  *
  * @class  Bin
- * @param  {number|string}  id  Unique id of the bin
- * @param  {number}         x   Left coordinate of the bin
- * @param  {number}         y   Top coordinate of the bin
- * @param  {number}         w   Width of the bin
- * @param  {number}         h   Height of the bin
+ * @param  {number|string}  id      Unique id of the bin
+ * @param  {number}         x       Left coordinate of the bin
+ * @param  {number}         y       Top coordinate of the bin
+ * @param  {number}         w       Width of the bin
+ * @param  {number}         h       Height of the bin
+ * @param  {number}         [maxw]  Max width of the bin (defaults to `w` if not provided)
+ * @param  {number}         [maxh]  Max height of the bin (defaults to `h` if not provided)
  * @example
  * var bin = new Bin('a', 0, 0, 12, 16);
  */
-function Bin(id, x, y, w, h) {
+function Bin(id, x, y, w, h, maxw, maxh) {
     this.id = id;
     this.x  = x;
     this.y  = y;
     this.w  = w;
     this.h  = h;
-    this.maxw = w;
-    this.maxh = h;
+    this.maxw = maxw || w;
+    this.maxh = maxh || h;
     this.refcount = 0;
 }
 
