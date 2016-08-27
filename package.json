@@ -22,7 +22,7 @@
     "documentation": "4.0.0-beta5",
     "eslint": "~3.4.0",
     "rollup": "0.34.10",
-    "tap": "~6.3.0"
+    "tap": "~7.0.0"
   },
   "engines": {
     "node": ">=4.0.0"
