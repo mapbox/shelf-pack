@@ -211,7 +211,7 @@ Bin { id: 104, x: 0, y: 0, w: 16, h: 16, maxw: 16, maxh: 16, refcount: 1 }
 
 ### Documentation
 
-Complete API documentation is here:  http://mapbox.github.io/shelf-pack/docs/
+Complete API documentation is here:  http://mapbox.github.io/shelf-pack/
 
 
 ### See also
