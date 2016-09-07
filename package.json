@@ -21,7 +21,7 @@
     "coveralls": "^2.11.12",
     "documentation": "4.0.0-beta5",
     "eslint": "~3.4.0",
-    "rollup": "0.34.12",
+    "rollup": "0.34.13",
     "tap": "~7.1.0"
   },
   "engines": {
