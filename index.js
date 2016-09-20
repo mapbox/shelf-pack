@@ -1,4 +1,4 @@
-export { ShelfPack as default };
+export default ShelfPack;
 
 
 /**
