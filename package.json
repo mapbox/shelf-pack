@@ -20,7 +20,7 @@
     "bin-pack": "1.0.2",
     "coveralls": "^2.11.12",
     "documentation": "4.0.0-beta5",
-    "eslint": "~3.6.0",
+    "eslint": "~3.7.1",
     "rollup": "0.36.1",
     "tap": "~7.1.0"
   },
