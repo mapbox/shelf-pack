@@ -6,11 +6,7 @@
   "jsnext:main": "index.js",
   "license": "ISC",
   "author": "Bryan Housel <bryan@mapbox.com>",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mapbox/shelf-pack.git"
-  },
-  "bugs": "https://github.com/mapbox/shelf-pack/issues",
+  "repository": "mapbox/shelf-pack",
   "keywords": [
     "bin packing",
     "sprite"
