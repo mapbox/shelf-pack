@@ -1,6 +1,10 @@
 .DS_Store
 .nyc_output/
+bench/
 circle.yml
 coverage/
+docs/
 node_modules/
 npm-debug.log
+RELEASE.md
+test/
