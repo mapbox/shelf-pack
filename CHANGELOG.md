@@ -1,5 +1,9 @@
 :warning: = Breaking change
 
+## 3.0.0
+##### 2017-Feb-12
+* shelf-pack is now a scoped package under the @mapbox namespace
+
 ## 2.0.1
 ##### 2016-Aug-11
 * Remember original size of free bins and use that for packing free space (#29)
