@@ -17,6 +17,7 @@
     "coveralls": "^2.11.12",
     "documentation": "4.0.0-beta5",
     "eslint": "^3.8.0",
+    "greenkeeper-postpublish": "^1.0.1",
     "rollup": "0.41.4",
     "tap": "^9.0.0"
   },
@@ -28,6 +29,7 @@
     "build": "rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
     "docs": "documentation build index.js --lint --github --format html --output docs/",
     "lint": "eslint index.js test/ bench/",
-    "test": "npm run build && npm run lint && tap --cov test/*.js"
+    "test": "npm run build && npm run lint && tap --cov test/*.js",
+    "postpublish": "greenkeeper-postpublish"
   }
 }
