@@ -2,7 +2,7 @@
 
 ## 3.0.0
 ##### 2017-Feb-12
-* shelf-pack is now a scoped package under the @mapbox namespace
+* :warning: shelf-pack is now a scoped package under the @mapbox namespace
 
 ## 2.0.1
 ##### 2016-Aug-11
