@@ -1,5 +1,5 @@
 {
-  "name": "shelf-pack",
+  "name": "@mapbox/shelf-pack",
   "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
   "version": "2.0.1",
   "main": "index.umd.js",

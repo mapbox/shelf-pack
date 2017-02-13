@@ -51,7 +51,7 @@ BinPack batch allocate random height and width bins x 0.51 ops/sec ±1.37% (6 ru
 #### Basic Usage
 
 ```js
-var ShelfPack = require('shelf-pack');
+var ShelfPack = require('@mapbox/shelf-pack');
 
 // Initialize the sprite with a width and height..
 var sprite = new ShelfPack(64, 64);
@@ -87,7 +87,7 @@ sprite.resize(128, 128);   // width, height
 #### Batch packing
 
 ```js
-var ShelfPack = require('shelf-pack');
+var ShelfPack = require('@mapbox/shelf-pack');
 
 // If you don't want to think about the size of the sprite,
 // the `autoResize` option will allow it to grow as needed..
@@ -141,7 +141,7 @@ myBins.forEach(function(bin) {
 #### Reference Counting
 
 ```js
-var ShelfPack = require('shelf-pack');
+var ShelfPack = require('@mapbox/shelf-pack');
 
 // Initialize the sprite with a width and height..
 var sprite = new ShelfPack(64, 64);
