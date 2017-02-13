@@ -18,7 +18,7 @@
     "documentation": "4.0.0-beta5",
     "eslint": "^3.8.0",
     "rollup": "0.41.4",
-    "tap": "^9.0.0"
+    "tap": "^10.1.0"
   },
   "engines": {
     "node": ">=4.0.0"
