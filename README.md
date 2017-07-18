@@ -1,5 +1,6 @@
 [![npm version](https://badge.fury.io/js/%40mapbox%2Fshelf-pack.svg)](https://badge.fury.io/js/%40mapbox%2Fshelf-pack)
-[![Build Status](https://circleci.com/gh/mapbox/shelf-pack/tree/master.svg?style=shield)](https://circleci.com/gh/mapbox/shelf-pack)
+[![Build Status](https://secure.travis-ci.org/mapbox/shelf-pack.svg)](http://travis-ci.org/mapbox/shelf-pack)
+pack)
 [![Coverage Status](https://coveralls.io/repos/github/mapbox/shelf-pack/badge.svg?branch=master)](https://coveralls.io/github/mapbox/shelf-pack?branch=master)
 
 ## shelf-pack
