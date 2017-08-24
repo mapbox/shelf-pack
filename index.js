@@ -71,22 +71,7 @@ ShelfPack.prototype.pack = function(bins, options) {
         }
     }
 
-    // Shrink the width/height of the sprite to the bare minimum.
-    // Since shelf-pack doubles first width, then height when running out of shelf space
-    // this can result in fairly large unused space both in width and height if that happens
-    // towards the end of bin packing.
-    if (this.shelves.length > 0) {
-        var w2 = 0;
-        var h2 = 0;
-
-        for (var j = 0; j < this.shelves.length; j++) {
-            var shelf = this.shelves[j];
-            h2 += shelf.h;
-            w2 = Math.max(shelf.w - shelf.free, w2);
-        }
-
-        this.resize(w2, h2);
-    }
+    this.shrink();
 
     return results;
 };
@@ -262,6 +247,28 @@ ShelfPack.prototype.allocShelf = function(index, w, h, id) {
     this.bins[id] = bin;
     this.ref(bin);
     return bin;
+};
+
+
+/**
+ * Shrink the width/height of the sprite to the bare minimum.
+ * Since shelf-pack doubles first width, then height when running out of shelf space
+ * this can result in fairly large unused space both in width and height if that happens
+ * towards the end of bin packing.
+ */
+ShelfPack.prototype.shrink = function() {
+    if (this.shelves.length > 0) {
+        var w2 = 0;
+        var h2 = 0;
+
+        for (var j = 0; j < this.shelves.length; j++) {
+            var shelf = this.shelves[j];
+            h2 += shelf.h;
+            w2 = Math.max(shelf.w - shelf.free, w2);
+        }
+
+        this.resize(w2, h2);
+    }
 };
 
 
