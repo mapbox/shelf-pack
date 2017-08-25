@@ -50,6 +50,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#ShelfPack#shrink'
+                        class='regular pre-open'>
+                        #shrink
+                      </a></li>
+                      
+                      <li><a
                         href='#ShelfPack#getBin'
                         class='regular pre-open'>
                         #getBin
@@ -115,7 +121,7 @@
       ShelfPack
     </h2>
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/2769bd4998547c7b66338961ae18b8c544fbfb17/index.js#L18-L28'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/a1e4b16adc07bf49d1072584949abe80ea05b768/index.js#L18-L28'>
       <span>index.js</span>
       </a>
     
@@ -478,6 +484,55 @@ as free and its space may be reused by the packing code.</p>
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> results = sprite.packOne(<span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-string">'a'</span>);</pre>
     
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='keyline-bottom' id='ShelfPack#shrink'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="pad1y contain">
+            <a class='icon pin-right pad1y dark-link caret-right'></a>
+            <span class='code strong strong truncate'>shrink</span>
+            <span class='quiet code space-right2'>()</span>
+        </div>
+      </div>
+      <div class="clearfix hidden toggle-target">
+        <section class='py2 clearfix'>
+
+  
+
+  <p>Shrink the width/height of the sprite to the bare minimum.
+Since shelf-pack doubles first width, then height when running out of shelf space
+this can result in fairly large unused space both in width and height if that happens
+towards the end of bin packing.</p>
+
+
+  <div class='pre p1 fill-light'>shrink()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
   
 
   
@@ -866,7 +921,7 @@ sprite.unref(bin);</pre>
       Bin
     </h2>
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/2769bd4998547c7b66338961ae18b8c544fbfb17/index.js#L430-L439'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mapbox/shelf-pack/blob/a1e4b16adc07bf49d1072584949abe80ea05b768/index.js#L437-L446'>
       <span>index.js</span>
       </a>
     

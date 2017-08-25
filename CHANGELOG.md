@@ -1,5 +1,9 @@
 :warning: = Breaking change
 
+## 3.1.0
+##### 2017-Aug-25
+* Provide shrink as a public method (#90)
+
 ## 3.0.0
 ##### 2017-Feb-12
 * :warning: shelf-pack is now a scoped package under the @mapbox namespace

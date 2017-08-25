@@ -1,7 +1,7 @@
 {
   "name": "@mapbox/shelf-pack",
   "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "index.umd.js",
   "jsnext:main": "index.js",
   "license": "ISC",
@@ -17,7 +17,6 @@
     "coveralls": "^2.11.12",
     "documentation": "4.0.0-beta5",
     "eslint": "^3.8.0",
-    "greenkeeper-postpublish": "^1.0.1",
     "rollup": "0.41.4",
     "tap": "^10.1.0"
   },
@@ -29,7 +28,6 @@
     "build": "rollup -f umd -n ShelfPack index.js --no-indent --no-strict -o index.umd.js",
     "docs": "documentation build index.js --lint --github --format html --output docs/",
     "lint": "eslint index.js test/ bench/",
-    "test": "npm run build && npm run lint && tap --cov test/*.js",
-    "postpublish": "greenkeeper-postpublish"
+    "test": "npm run build && npm run lint && tap --cov test/*.js"
   }
 }
