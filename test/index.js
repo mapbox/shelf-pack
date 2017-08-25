@@ -418,6 +418,21 @@ test('ShelfPack', function(t) {
     });
 
 
+    t.test('shrink()', function(t) {
+        t.test('shrink() succeeds', function(t) {
+            var sprite = new ShelfPack(20, 20);
+            sprite.packOne(10, 5);
+            t.deepEqual([sprite.w, sprite.h], [20, 20]);
+
+            sprite.shrink();
+            t.deepEqual([sprite.w, sprite.h], [10, 5]);
+            t.end();
+        });
+
+        t.end();
+    });
+
+
     t.test('resize()', function(t) {
         t.test('resize larger succeeds', function(t) {
             var sprite = new ShelfPack(10, 10);
