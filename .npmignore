@@ -1,4 +1,6 @@
 .DS_Store
+.esm-cache
+.vscode/
 .nyc_output/
 bench/
 circle.yml
@@ -6,5 +8,6 @@ coverage/
 docs/
 node_modules/
 npm-debug.log
+package-lock.json
 RELEASE.md
 test/

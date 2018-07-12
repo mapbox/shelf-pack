@@ -1,6 +1,9 @@
 .DS_Store
+.esm-cache
+.vscode/
 .nyc_output/
 coverage/
-index.umd.js
+index.js
 node_modules/
 npm-debug.log
+package-lock.json
