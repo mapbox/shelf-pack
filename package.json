@@ -21,7 +21,7 @@
     "tap": "^12.0.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "bench": "npm run build && node bench/bench.js",
