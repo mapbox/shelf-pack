@@ -29,5 +29,8 @@
     "docs": "documentation build index.mjs --github --format html --output docs/",
     "lint": "eslint index.mjs test/ bench/",
     "test": "npm run build && npm run lint && tap --cov test/*.js"
+  },
+  "dependencies": {
+    "@mapbox/shelf-pack": "^3.2.0"
   }
 }

@@ -2,17 +2,19 @@
 [![Build Status](https://secure.travis-ci.org/mapbox/shelf-pack.svg)](http://travis-ci.org/mapbox/shelf-pack)
 [![Coverage Status](https://coveralls.io/repos/github/mapbox/shelf-pack/badge.svg?branch=master)](https://coveralls.io/github/mapbox/shelf-pack?branch=master)
 
-## shelf-pack
+## Shelf-pack
 
 A 2D rectangular [bin packing](https://en.wikipedia.org/wiki/Bin_packing_problem)
 data structure that uses the Shelf Best Height Fit heuristic.
 
 
-### What is it?
+### What is Shelf-Pack?
 
-`shelf-pack` is a library for packing little rectangles into a big rectangle.  This sounds simple enough,
-but finding an optimal packing is a problem with [NP-Complete](https://en.wikipedia.org/wiki/NP-completeness)
-complexity.  One useful application of bin packing is to assemble icons or glyphs into a sprite texture.
+`shelf-pack` is a library for packing little rectangles into a big rectangle.  
+
+This sounds simple enough, but finding an optimal packing is a problem with [NP-Complete](https://en.wikipedia.org/wiki/NP-completeness) complexity.  
+
+One useful application of bin packing is to assemble icons or glyphs into a sprite texture.
 
 There are many ways to approach the bin packing problem, but `shelf-pack` uses the Shelf Best
 Height Fit heuristic.  It works by dividing the total space into "shelves", each with a certain height.
@@ -21,7 +23,6 @@ The allocator packs rectangles onto whichever shelf minimizes the amount of wast
 `shelf-pack` is simple, fast, and works best when the rectangles have similar heights (icons and glyphs
 are like this).  It is not a generalized bin packer, and can potentially waste a lot of space if the
 rectangles vary significantly in height.
-
 
 ### How fast is it?
 
@@ -46,9 +47,24 @@ BinPack batch allocate random height and width bins x 0.51 ops/sec ±1.37% (6 ru
 ```
 
 
-### Usage
+### Usage & Getting Started
+#### Prerequisites
+- [Node.js](https://nodejs.org/en/download/prebuilt-installer) installed on your machine. Click the link to download the prebuilt installer.
 
-#### Basic Usage
+#### Installation and Running the Example
+Run the following commands in your terminal to set up and run the project:
+
+```bash
+# Install dependencies
+npm install
+
+# Install @mapbox/shelf-pack module
+npm install @mapbox/shelf-pack
+
+# Run the batchPacking example
+node .\examples\batchPacking.js
+```
+#### Basic Usage:
 
 ```js
 var ShelfPack = require('@mapbox/shelf-pack');
